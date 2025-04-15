@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplicación de Estudio de Química</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -12,7 +14,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: #f0f2f5;
             padding: 20px;
         }
@@ -92,7 +94,7 @@
 
         .element-card .symbol {
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 600;
         }
 
         .element-card .atomic-number {
@@ -115,12 +117,27 @@
 
         .modal-content {
             background-color: #fff;
-            padding: 20px;
             border-radius: 10px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
+            width: 240px;
+            height: 300px;
+            padding: 15px;
             position: relative;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            display: grid;
+            grid-template-areas:
+                "atomic-number ."
+                "symbol symbol"
+                "name name"
+                "mass mass"
+                "electronegativity electronegativity"
+                "oxidation oxidation"
+                "group group"
+                "electron electron";
+            grid-template-rows: auto auto auto auto auto auto auto auto;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
         }
 
         .modal-content .close {
@@ -129,14 +146,63 @@
             right: 10px;
             cursor: pointer;
             font-size: 20px;
+            color: #666;
         }
 
-        .modal-content h2 {
-            margin-bottom: 10px;
+        .modal-content .atomic-number {
+            grid-area: atomic-number;
+            font-size: 16px;
+            font-weight: 400;
+            color: #444;
         }
 
-        .modal-content p {
-            margin: 5px 0;
+        .modal-content .symbol {
+            grid-area: symbol;
+            font-size: 48px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-content .name {
+            grid-area: name;
+            font-size: 18px;
+            font-weight: 400;
+            color: #555;
+        }
+
+        .modal-content .mass {
+            grid-area: mass;
+            font-size: 14px;
+            font-weight: 300;
+            color: #666;
+        }
+
+        .modal-content .electronegativity {
+            grid-area: electronegativity;
+            font-size: 14px;
+            font-weight: 300;
+            color: #666;
+        }
+
+        .modal-content .oxidation {
+            grid-area: oxidation;
+            font-size: 14px;
+            font-weight: 300;
+            color: #666;
+        }
+
+        .modal-content .group {
+            grid-area: group;
+            font-size: 14px;
+            font-weight: 300;
+            color: #666;
+        }
+
+        .modal-content .electron {
+            grid-area: electron;
+            font-size: 14px;
+            font-weight: 300;
+            color: #666;
         }
 
         .group-label {
@@ -170,6 +236,13 @@
 
         .quiz-question {
             margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .quiz-question p {
+            font-weight: 500;
         }
 
         .quiz-question input {
@@ -180,22 +253,25 @@
             border-radius: 5px;
         }
 
-        .quiz-section button {
-            padding: 10px 20px;
+        .quiz-question button {
+            padding: 8px 16px;
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            align-self: flex-start;
+            margin-top: 5px;
         }
 
-        .quiz-section button:hover {
+        .quiz-question button:hover {
             background-color: #45a049;
         }
 
-        .quiz-result {
-            margin-top: 20px;
-            font-weight: bold;
+        .quiz-feedback {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
         }
 
         @media (max-width: 1200px) {
@@ -243,24 +319,26 @@
         <div class="periodic-table" id="periodicTable"></div>
         <div class="quiz-section">
             <h2>Cuestionario de Óxidos</h2>
-            <div id="quizQuestions"></div>
-            <button onclick="checkQuiz()">Enviar Respuestas</button>
-            <div id="quizResult" class="quiz-result"></div>
+            <div id="oxideQuizQuestions"></div>
+        </div>
+        <div class="quiz-section">
+            <h2>Cuestionario de Oxoácidos</h2>
+            <div id="oxoacidQuizQuestions"></div>
         </div>
     </div>
 
     <script>
         const groupColors = {
-            "Metal Alcalino": "#FFD1DC", // Rosa pastel
-            "Metal Alcalinotérreo": "#D1E8FF", // Azul pastel
-            "Metal de Transición": "#E6E6FA", // Lavanda pastel
-            "Lantanido": "#F0E68C", // Amarillo pastel
-            "Actínido": "#FFE4E1", // Rosa claro pastel
-            "Metal Post-Transición": "#D8BFD8", // Púrpura pastel
-            "Metaloides": "#98FB98", // Verde menta pastel
-            "No Metal": "#FFE4B5", // Melocotón pastel
-            "Halógeno": "#ADD8E6", // Celeste pastel
-            "Gas Noble": "#E0FFFF" // Cian claro pastel
+            "Metal Alcalino": "#FFD1DC",
+            "Metal Alcalinotérreo": "#D1E8FF",
+            "Metal de Transición": "#E6E6FA",
+            "Lantanido": "#F0E68C",
+            "Actínido": "#FFE4E1",
+            "Metal Post-Transición": "#D8BFD8",
+            "Metaloides": "#98FB98",
+            "No Metal": "#FFE4B5",
+            "Halógeno": "#ADD8E6",
+            "Gas Noble": "#E0FFFF"
         };
 
         const elements = [
@@ -375,7 +453,7 @@
             { name: "Meitnerio", symbol: "Mt", atomicNumber: 109, mass: 278, electronegativity: null, oxidationStates: [], position: { row: 7, col: 9 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁷ 7s²" },
             { name: "Darmstadtio", symbol: "Ds", atomicNumber: 110, mass: 281, electronegativity: null, oxidationStates: [], position: { row: 7, col: 10 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁸ 7s²" },
             { name: "Roentgenio", symbol: "Rg", atomicNumber: 111, mass: 282, electronegativity: null, oxidationStates: [], position: { row: 7, col: 11 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁹ 7s²" },
-            { name: "Copernicio", symbol: "Cn", atomicNumber: 112, mass: 285, electronegativity: null, oxidationStates: [], position: { row: 7, col: 12 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s²" },
+            { name: "Copernicio", symbol: "Cn", atomicNumber: 112, mass: 285, electronegativity: null, oxidationStates: [], position: { row: 7, col: 12 }, group: "Metal Post-Transición", electronConfig: "[Of] 5f¹⁴ 6d¹⁰ 7s²" },
             { name: "Nihonio", symbol: "Nh", atomicNumber: 113, mass: 286, electronegativity: null, oxidationStates: [], position: { row: 7, col: 13 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹" },
             { name: "Flerovio", symbol: "Fl", atomicNumber: 114, mass: 289, electronegativity: null, oxidationStates: [], position: { row: 7, col: 14 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²" },
             { name: "Moscovio", symbol: "Mc", atomicNumber: 115, mass: 290, electronegativity: null, oxidationStates: [], position: { row: 7, col: 15 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³" },
@@ -399,7 +477,6 @@
                 grid[row - 1][col - 1] = element;
             });
 
-            // Add group labels as a separate row
             const labelRow = document.createElement('div');
             labelRow.className = 'group-row';
             for (let col = 1; col <= 18; col++) {
@@ -426,7 +503,7 @@
                     } else {
                         cell.className = 'empty';
                     }
-                    cell.style.gridRow = row + 2; // Offset by 1 for group labels
+                    cell.style.gridRow = row + 2;
                     cell.style.gridColumn = col + 1;
                     periodicTable.appendChild(cell);
                 }
@@ -459,15 +536,16 @@
             const modal = document.createElement('div');
             modal.className = 'modal';
             modal.innerHTML = `
-                <div class="modal-content">
+                <div class="modal-content" style="background-color: ${groupColors[element.group]}">
                     <span class="close">×</span>
-                    <h2>${element.name} (${element.symbol})</h2>
-                    <p>Número Atómico: ${element.atomicNumber}</p>
-                    <p>Masa Atómica: ${element.mass.toFixed(3)}</p>
-                    <p>Electronegatividad: ${element.electronegativity || 'N/A'}</p>
-                    <p>Estados de Oxidación: ${element.oxidationStates.join(', ') || 'N/A'}</p>
-                    <p>Grupo: ${element.group}</p>
-                    <p>Configuración Electrónica Externa: ${element.electronConfig}</p>
+                    <div class="atomic-number">${element.atomicNumber}</div>
+                    <div class="symbol">${element.symbol}</div>
+                    <div class="name">${element.name}</div>
+                    <div class="mass">${element.mass.toFixed(3)}</div>
+                    <div class="electronegativity">EN: ${element.electronegativity || 'N/A'}</div>
+                    <div class="oxidation">EO: ${element.oxidationStates.join(', ') || 'N/A'}</div>
+                    <div class="group">${element.group}</div>
+                    <div class="electron">${element.electronConfig}</div>
                 </div>
             `;
             document.body.appendChild(modal);
@@ -511,9 +589,9 @@
             });
         }
 
-        const quizOxides = [
+        const oxideQuiz = [
             { formula: "Na2O", name: "Óxido de disodio" },
-            { name: "Óxido de magnesio", formula: "MgO" },
+            { formula: "MgO", name: "Óxido de magnesio" },
             { formula: "Al2O3", name: "Óxido de dialuminio" },
             { formula: "SO2", name: "Dióxido de azufre" },
             { formula: "P2O5", name: "Pentóxido de difósforo" },
@@ -524,36 +602,53 @@
             { formula: "N2O5", name: "Pentóxido de dinitrógeno" }
         ];
 
-        function createQuiz() {
-            const quizQuestions = document.getElementById('quizQuestions');
-            quizQuestions.innerHTML = '';
-            quizOxides.forEach((oxide, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'quiz-question';
-                questionDiv.innerHTML = `
-                    <p>${index + 1}. ${oxide.formula}</p>
-                    <input type="text" id="answer${index}" placeholder="Nombre del óxido">
-                `;
-                quizQuestions.appendChild(questionDiv);
-            });
-        }
+        const oxoacidQuiz = [
+            { formula: "H2SO4", name: "Ácido sulfúrico" },
+            { formula: "HNO3", name: "Ácido nítrico" },
+            { formula: "H3PO4", name: "Ácido fosfórico" },
+            { formula: "H2CO3", name: "Ácido carbónico" },
+            { formula: "HClO4", name: "Ácido perclórico" },
+            { formula: "H2SO3", name: "Ácido sulfuroso" },
+            { formula: "HNO2", name: "Ácido nitroso" },
+            { formula: "H3BO3", name: "Ácido bórico" },
+            { formula: "HClO3", name: "Ácido clórico" },
+            { formula: "H2SeO4", name: "Ácido selénico" }
+        ];
 
         function normalizeString(str) {
             return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         }
 
-        function checkQuiz() {
-            let correct = 0;
-            quizOxides.forEach((oxide, index) => {
-                const userAnswer = document.getElementById(`answer${index}`).value;
-                const normalizedUserAnswer = normalizeString(userAnswer);
-                const normalizedCorrectAnswer = normalizeString(oxide.name);
-                if (normalizedUserAnswer === normalizedCorrectAnswer) {
-                    correct++;
-                }
+        function createQuiz(quizData, containerId, quizType) {
+            const quizQuestions = document.getElementById(containerId);
+            quizQuestions.innerHTML = '';
+            quizData.forEach((item, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                questionDiv.innerHTML = `
+                    <p>${index + 1}. ${item.formula}</p>
+                    <input type="text" id="${quizType}Answer${index}" placeholder="Nombre del compuesto">
+                    <button onclick="checkAnswer(${index}, '${quizType}')">Verificar</button>
+                    <div id="${quizType}Feedback${index}" class="quiz-feedback"></div>
+                `;
+                quizQuestions.appendChild(questionDiv);
             });
-            const resultDiv = document.getElementById('quizResult');
-            resultDiv.textContent = `Obtuviste ${correct} de 10 respuestas correctas.`;
+        }
+
+        function checkAnswer(index, quizType) {
+            const quizData = quizType === 'oxide' ? oxideQuiz : oxoacidQuiz;
+            const userAnswer = document.getElementById(`${quizType}Answer${index}`).value;
+            const normalizedUserAnswer = normalizeString(userAnswer);
+            const normalizedCorrectAnswer = normalizeString(quizData[index].name);
+            const feedbackDiv = document.getElementById(`${quizType}Feedback${index}`);
+
+            if (normalizedUserAnswer === normalizedCorrectAnswer) {
+                feedbackDiv.textContent = "¡Correcto!";
+                feedbackDiv.style.color = "green";
+            } else {
+                feedbackDiv.textContent = `Incorrecto. La respuesta correcta es: ${quizData[index].name}`;
+                feedbackDiv.style.color = "red";
+            }
         }
 
         searchInput.addEventListener('input', filterElements);
@@ -561,7 +656,8 @@
 
         createPeriodicTable();
         createGroupButtons();
-        createQuiz();
+        createQuiz(oxideQuiz, 'oxideQuizQuestions', 'oxide');
+        createQuiz(oxoacidQuiz, 'oxoacidQuizQuestions', 'oxoacid');
     </script>
 </body>
 </html>
