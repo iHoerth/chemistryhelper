@@ -119,7 +119,7 @@
             background-color: #fff;
             border-radius: 10px;
             width: 240px;
-            height: 300px;
+            height: 320px;
             padding: 15px;
             position: relative;
             box-shadow: 0 4px 16px rgba(0,0,0,0.3);
@@ -132,8 +132,9 @@
                 "electronegativity electronegativity"
                 "oxidation oxidation"
                 "group group"
-                "electron electron";
-            grid-template-rows: auto auto auto auto auto auto auto auto;
+                "electron electron"
+                "valence valence";
+            grid-template-rows: auto auto auto auto auto auto auto auto auto;
             grid-template-columns: 1fr 1fr;
             align-items: center;
             text-align: center;
@@ -205,6 +206,13 @@
             color: #666;
         }
 
+        .modal-content .valence {
+            grid-area: valence;
+            font-size: 14px;
+            font-weight: 300;
+            color: #666;
+        }
+
         .group-label {
             text-align: center;
             font-size: 12px;
@@ -232,6 +240,21 @@
 
         .quiz-section h2 {
             margin-bottom: 20px;
+        }
+
+        .quiz-toggle {
+            margin-bottom: 20px;
+        }
+
+        .quiz-toggle label {
+            margin-right: 10px;
+            font-weight: 500;
+        }
+
+        .quiz-toggle select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         .quiz-question {
@@ -319,11 +342,36 @@
         <div class="periodic-table" id="periodicTable"></div>
         <div class="quiz-section">
             <h2>Cuestionario de Óxidos</h2>
+            <div class="quiz-toggle">
+                <label for="oxideQuizMode">Modo:</label>
+                <select id="oxideQuizMode" onchange="createQuiz(oxideQuiz, 'oxideQuizQuestions', 'oxide')">
+                    <option value="formulaToName">Fórmula a Nombre</option>
+                    <option value="nameToFormula">Nombre a Fórmula</option>
+                </select>
+            </div>
             <div id="oxideQuizQuestions"></div>
         </div>
         <div class="quiz-section">
             <h2>Cuestionario de Oxoácidos</h2>
+            <div class="quiz-toggle">
+                <label for="oxoacidQuizMode">Modo:</label>
+                <select id="oxoacidQuizMode" onchange="createQuiz(oxoacidQuiz, 'oxoacidQuizQuestions', 'oxoacid')">
+                    <option value="formulaToName">Fórmula a Nombre</option>
+                    <option value="nameToFormula">Nombre a Fórmula</option>
+                </select>
+            </div>
             <div id="oxoacidQuizQuestions"></div>
+        </div>
+        <div class="quiz-section">
+            <h2>Cuestionario de Hidróxidos</h2>
+            <div class="quiz-toggle">
+                <label for="hydroxideQuizMode">Modo:</label>
+                <select id="hydroxideQuizMode" onchange="createQuiz(hydroxideQuiz, 'hydroxideQuizQuestions', 'hydroxide')">
+                    <option value="formulaToName">Fórmula a Nombre</option>
+                    <option value="nameToFormula">Nombre a Fórmula</option>
+                </select>
+            </div>
+            <div id="hydroxideQuizQuestions"></div>
         </div>
     </div>
 
@@ -342,124 +390,124 @@
         };
 
         const elements = [
-            { name: "Hidrógeno", symbol: "H", atomicNumber: 1, mass: 1.008, electronegativity: 2.20, oxidationStates: [-1, 1], position: { row: 1, col: 1 }, group: "No Metal", electronConfig: "1s¹" },
-            { name: "Helio", symbol: "He", atomicNumber: 2, mass: 4.002, electronegativity: null, oxidationStates: [0], position: { row: 1, col: 18 }, group: "Gas Noble", electronConfig: "1s²" },
-            { name: "Litio", symbol: "Li", atomicNumber: 3, mass: 6.941, electronegativity: 0.98, oxidationStates: [1], position: { row: 2, col: 1 }, group: "Metal Alcalino", electronConfig: "[He] 2s¹" },
-            { name: "Berilio", symbol: "Be", atomicNumber: 4, mass: 9.012, electronegativity: 1.57, oxidationStates: [2], position: { row: 2, col: 2 }, group: "Metal Alcalinotérreo", electronConfig: "[He] 2s²" },
-            { name: "Boro", symbol: "B", atomicNumber: 5, mass: 10.811, electronegativity: 2.04, oxidationStates: [3], position: { row: 2, col: 13 }, group: "Metaloides", electronConfig: "[He] 2s² 2p¹" },
-            { name: "Carbono", symbol: "C", atomicNumber: 6, mass: 12.011, electronegativity: 2.55, oxidationStates: [-4, -2, 2, 4], position: { row: 2, col: 14 }, group: "No Metal", electronConfig: "[He] 2s² 2p²" },
-            { name: "Nitrógeno", symbol: "N", atomicNumber: 7, mass: 14.007, electronegativity: 3.04, oxidationStates: [-3, -2, -1, 1, 2, 3, 4, 5], position: { row: 2, col: 15 }, group: "No Metal", electronConfig: "[He] 2s² 2p³" },
-            { name: "Oxígeno", symbol: "O", atomicNumber: 8, mass: 15.999, electronegativity: 3.44, oxidationStates: [-2, -1, 1, 2], position: { row: 2, col: 16 }, group: "No Metal", electronConfig: "[He] 2s² 2p⁴" },
-            { name: "Flúor", symbol: "F", atomicNumber: 9, mass: 18.998, electronegativity: 3.98, oxidationStates: [-1], position: { row: 2, col: 17 }, group: "Halógeno", electronConfig: "[He] 2s² 2p⁵" },
-            { name: "Neón", symbol: "Ne", atomicNumber: 10, mass: 20.180, electronegativity: null, oxidationStates: [0], position: { row: 2, col: 18 }, group: "Gas Noble", electronConfig: "[He] 2s² 2p⁶" },
-            { name: "Sodio", symbol: "Na", atomicNumber: 11, mass: 22.990, electronegativity: 0.93, oxidationStates: [1], position: { row: 3, col: 1 }, group: "Metal Alcalino", electronConfig: "[Ne] 3s¹" },
-            { name: "Magnesio", symbol: "Mg", atomicNumber: 12, mass: 24.305, electronegativity: 1.31, oxidationStates: [2], position: { row: 3, col: 2 }, group: "Metal Alcalinotérreo", electronConfig: "[Ne] 3s²" },
-            { name: "Aluminio", symbol: "Al", atomicNumber: 13, mass: 26.982, electronegativity: 1.61, oxidationStates: [3], position: { row: 3, col: 13 }, group: "Metal Post-Transición", electronConfig: "[Ne] 3s² 3p¹" },
-            { name: "Silicio", symbol: "Si", atomicNumber: 14, mass: 28.085, electronegativity: 1.90, oxidationStates: [-4, 2, 4], position: { row: 3, col: 14 }, group: "Metaloides", electronConfig: "[Ne] 3s² 3p²" },
-            { name: "Fósforo", symbol: "P", atomicNumber: 15, mass: 30.974, electronegativity: 2.19, oxidationStates: [-3, 3, 5], position: { row: 3, col: 15 }, group: "No Metal", electronConfig: "[Ne] 3s² 3p³" },
-            { name: "Azufre", symbol: "S", atomicNumber: 16, mass: 32.06, electronegativity: 2.58, oxidationStates: [-2, 2, 4, 6], position: { row: 3, col: 16 }, group: "No Metal", electronConfig: "[Ne] 3s² 3p⁴" },
-            { name: "Cloro", symbol: "Cl", atomicNumber: 17, mass: 35.45, electronegativity: 3.16, oxidationStates: [-1, 1, 3, 5, 7], position: { row: 3, col: 17 }, group: "Halógeno", electronConfig: "[Ne] 3s² 3p⁵" },
-            { name: "Argón", symbol: "Ar", atomicNumber: 18, mass: 39.948, electronegativity: null, oxidationStates: [0], position: { row: 3, col: 18 }, group: "Gas Noble", electronConfig: "[Ne] 3s² 3p⁶" },
-            { name: "Potasio", symbol: "K", atomicNumber: 19, mass: 39.098, electronegativity: 0.82, oxidationStates: [1], position: { row: 4, col: 1 }, group: "Metal Alcalino", electronConfig: "[Ar] 4s¹" },
-            { name: "Calcio", symbol: "Ca", atomicNumber: 20, mass: 40.078, electronegativity: 1.00, oxidationStates: [2], position: { row: 4, col: 2 }, group: "Metal Alcalinotérreo", electronConfig: "[Ar] 4s²" },
-            { name: "Escandio", symbol: "Sc", atomicNumber: 21, mass: 44.956, electronegativity: 1.36, oxidationStates: [3], position: { row: 4, col: 3 }, group: "Metal de Transición", electronConfig: "[Ar] 3d¹ 4s²" },
-            { name: "Titanio", symbol: "Ti", atomicNumber: 22, mass: 47.867, electronegativity: 1.54, oxidationStates: [2, 3, 4], position: { row: 4, col: 4 }, group: "Metal de Transición", electronConfig: "[Ar] 3d² 4s²" },
-            { name: "Vanadio", symbol: "V", atomicNumber: 23, mass: 50.942, electronegativity: 1.63, oxidationStates: [2, 3, 4, 5], position: { row: 4, col: 5 }, group: "Metal de Transición", electronConfig: "[Ar] 3d³ 4s²" },
-            { name: "Cromo", symbol: "Cr", atomicNumber: 24, mass: 51.996, electronegativity: 1.66, oxidationStates: [2, 3, 6], position: { row: 4, col: 6 }, group: "Metal de Transición", electronConfig: "[Ar] 3d⁵ 4s¹" },
-            { name: "Manganeso", symbol: "Mn", atomicNumber: 25, mass: 54.938, electronegativity: 1.55, oxidationStates: [2, 3, 4, 6, 7], position: { row: 4, col: 7 }, group: "Metal de Transición", electronConfig: "[Ar] 3d⁵ 4s²" },
-            { name: "Hierro", symbol: "Fe", atomicNumber: 26, mass: 55.845, electronegativity: 1.83, oxidationStates: [2, 3], position: { row: 4, col: 8 }, group: "Metal de Transición", electronConfig: "[Ar] 3d⁶ 4s²" },
-            { name: "Cobalto", symbol: "Co", atomicNumber: 27, mass: 58.933, electronegativity: 1.88, oxidationStates: [2, 3], position: { row: 4, col: 9 }, group: "Metal de Transición", electronConfig: "[Ar] 3d⁷ 4s²" },
-            { name: "Níquel", symbol: "Ni", atomicNumber: 28, mass: 58.693, electronegativity: 1.91, oxidationStates: [2], position: { row: 4, col: 10 }, group: "Metal de Transición", electronConfig: "[Ar] 3d⁸ 4s²" },
-            { name: "Cobre", symbol: "Cu", atomicNumber: 29, mass: 63.546, electronegativity: 1.90, oxidationStates: [1, 2], position: { row: 4, col: 11 }, group: "Metal de Transición", electronConfig: "[Ar] 3d¹⁰ 4s¹" },
-            { name: "Cinc", symbol: "Zn", atomicNumber: 30, mass: 65.38, electronegativity: 1.65, oxidationStates: [2], position: { row: 4, col: 12 }, group: "Metal Post-Transición", electronConfig: "[Ar] 3d¹⁰ 4s²" },
-            { name: "Galio", symbol: "Ga", atomicNumber: 31, mass: 69.723, electronegativity: 1.81, oxidationStates: [3], position: { row: 4, col: 13 }, group: "Metal Post-Transición", electronConfig: "[Ar] 3d¹⁰ 4s² 4p¹" },
-            { name: "Germanio", symbol: "Ge", atomicNumber: 32, mass: 72.63, electronegativity: 2.01, oxidationStates: [2, 4], position: { row: 4, col: 14 }, group: "Metaloides", electronConfig: "[Ar] 3d¹⁰ 4s² 4p²" },
-            { name: "Arsénico", symbol: "As", atomicNumber: 33, mass: 74.922, electronegativity: 2.18, oxidationStates: [-3, 3, 5], position: { row: 4, col: 15 }, group: "Metaloides", electronConfig: "[Ar] 3d¹⁰ 4s² 4p³" },
-            { name: "Selenio", symbol: "Se", atomicNumber: 34, mass: 78.971, electronegativity: 2.55, oxidationStates: [-2, 2, 4, 6], position: { row: 4, col: 16 }, group: "No Metal", electronConfig: "[Ar] 3d¹⁰ 4s² 4p⁴" },
-            { name: "Bromo", symbol: "Br", atomicNumber: 35, mass: 79.904, electronegativity: 2.96, oxidationStates: [-1, 1, 3, 5], position: { row: 4, col: 17 }, group: "Halógeno", electronConfig: "[Ar] 3d¹⁰ 4s² 4p⁵" },
-            { name: "Kriptón", symbol: "Kr", atomicNumber: 36, mass: 83.798, electronegativity: null, oxidationStates: [0], position: { row: 4, col: 18 }, group: "Gas Noble", electronConfig: "[Ar] 3d¹⁰ 4s² 4p⁶" },
-            { name: "Rubidio", symbol: "Rb", atomicNumber: 37, mass: 85.468, electronegativity: 0.82, oxidationStates: [1], position: { row: 5, col: 1 }, group: "Metal Alcalino", electronConfig: "[Kr] 5s¹" },
-            { name: "Estroncio", symbol: "Sr", atomicNumber: 38, mass: 87.62, electronegativity: 0.95, oxidationStates: [2], position: { row: 5, col: 2 }, group: "Metal Alcalinotérreo", electronConfig: "[Kr] 5s²" },
-            { name: "Itrio", symbol: "Y", atomicNumber: 39, mass: 88.906, electronegativity: 1.22, oxidationStates: [3], position: { row: 5, col: 3 }, group: "Metal de Transición", electronConfig: "[Kr] 4d¹ 5s²" },
-            { name: "Circonio", symbol: "Zr", atomicNumber: 40, mass: 91.224, electronegativity: 1.33, oxidationStates: [4], position: { row: 5, col: 4 }, group: "Metal de Transición", electronConfig: "[Kr] 4d² 5s²" },
-            { name: "Niobio", symbol: "Nb", atomicNumber: 41, mass: 92.906, electronegativity: 1.6, oxidationStates: [3, 5], position: { row: 5, col: 5 }, group: "Metal de Transición", electronConfig: "[Kr] 4d⁴ 5s¹" },
-            { name: "Molibdeno", symbol: "Mo", atomicNumber: 42, mass: 95.95, electronegativity: 2.16, oxidationStates: [2, 3, 4, 5, 6], position: { row: 5, col: 6 }, group: "Metal de Transición", electronConfig: "[Kr] 4d⁵ 5s¹" },
-            { name: "Tecnecio", symbol: "Tc", atomicNumber: 43, mass: 98, electronegativity: 1.9, oxidationStates: [4, 7], position: { row: 5, col: 7 }, group: "Metal de Transición", electronConfig: "[Kr] 4d⁵ 5s²" },
-            { name: "Rutenio", symbol: "Ru", atomicNumber: 44, mass: 101.07, electronegativity: 2.2, oxidationStates: [2, 3, 4, 6, 8], position: { row: 5, col: 8 }, group: "Metal de Transición", electronConfig: "[Kr] 4d⁷ 5s¹" },
-            { name: "Rodio", symbol: "Rh", atomicNumber: 45, mass: 102.906, electronegativity: 2.28, oxidationStates: [3], position: { row: 5, col: 9 }, group: "Metal de Transición", electronConfig: "[Kr] 4d⁸ 5s¹" },
-            { name: "Paladio", symbol: "Pd", atomicNumber: 46, mass: 106.42, electronegativity: 2.2, oxidationStates: [2, 4], position: { row: 5, col: 10 }, group: "Metal de Transición", electronConfig: "[Kr] 4d¹⁰" },
-            { name: "Plata", symbol: "Ag", atomicNumber: 47, mass: 107.868, electronegativity: 1.93, oxidationStates: [1], position: { row: 5, col: 11 }, group: "Metal de Transición", electronConfig: "[Kr] 4d¹⁰ 5s¹" },
-            { name: "Cadmio", symbol: "Cd", atomicNumber: 48, mass: 112.414, electronegativity: 1.69, oxidationStates: [2], position: { row: 5, col: 12 }, group: "Metal Post-Transición", electronConfig: "[Kr] 4d¹⁰ 5s²" },
-            { name: "Indio", symbol: "In", atomicNumber: 49, mass: 114.818, electronegativity: 1.78, oxidationStates: [3], position: { row: 5, col: 13 }, group: "Metal Post-Transición", electronConfig: "[Kr] 4d¹⁰ 5s² 5p¹" },
-            { name: "Estaño", symbol: "Sn", atomicNumber: 50, mass: 118.71, electronegativity: 1.96, oxidationStates: [2, 4], position: { row: 5, col: 14 }, group: "Metal Post-Transición", electronConfig: "[Kr] 4d¹⁰ 5s² 5p²" },
-            { name: "Antimonio", symbol: "Sb", atomicNumber: 51, mass: 121.76, electronegativity: 2.05, oxidationStates: [-3, 3, 5], position: { row: 5, col: 15 }, group: "Metaloides", electronConfig: "[Kr] 4d¹⁰ 5s² 5p³" },
-            { name: "Telurio", symbol: "Te", atomicNumber: 52, mass: 127.6, electronegativity: 2.1, oxidationStates: [-2, 2, 4, 6], position: { row: 5, col: 16 }, group: "Metaloides", electronConfig: "[Kr] 4d¹⁰ 5s² 5p⁴" },
-            { name: "Yodo", symbol: "I", atomicNumber: 53, mass: 126.904, electronegativity: 2.5, oxidationStates: [-1, 1, 3, 5, 7], position: { row: 5, col: 17 }, group: "Halógeno", electronConfig: "[Kr] 4d¹⁰ 5s² 5p⁵" },
-            { name: "Xenón", symbol: "Xe", atomicNumber: 54, mass: 131.293, electronegativity: null, oxidationStates: [0, 2, 4, 6, 8], position: { row: 5, col: 18 }, group: "Gas Noble", electronConfig: "[Kr] 4d¹⁰ 5s² 5p⁶" },
-            { name: "Cesio", symbol: "Cs", atomicNumber: 55, mass: 132.905, electronegativity: 0.79, oxidationStates: [1], position: { row: 6, col: 1 }, group: "Metal Alcalino", electronConfig: "[Xe] 6s¹" },
-            { name: "Bario", symbol: "Ba", atomicNumber: 56, mass: 137.327, electronegativity: 0.89, oxidationStates: [2], position: { row: 6, col: 2 }, group: "Metal Alcalinotérreo", electronConfig: "[Xe] 6s²" },
-            { name: "Lantano", symbol: "La", atomicNumber: 57, mass: 138.905, electronegativity: 1.1, oxidationStates: [3], position: { row: 6, col: 3 }, group: "Lantanido", electronConfig: "[Xe] 5d¹ 6s²" },
-            { name: "Cerio", symbol: "Ce", atomicNumber: 58, mass: 140.116, electronegativity: 1.12, oxidationStates: [3, 4], position: { row: 8, col: 4 }, group: "Lantanido", electronConfig: "[Xe] 4f¹ 5d¹ 6s²" },
-            { name: "Praseodimio", symbol: "Pr", atomicNumber: 59, mass: 140.908, electronegativity: 1.13, oxidationStates: [3], position: { row: 8, col: 5 }, group: "Lantanido", electronConfig: "[Xe] 4f³ 6s²" },
-            { name: "Neodimio", symbol: "Nd", atomicNumber: 60, mass: 144.242, electronegativity: 1.14, oxidationStates: [3], position: { row: 8, col: 6 }, group: "Lantanido", electronConfig: "[Xe] 4f⁴ 6s²" },
-            { name: "Prometio", symbol: "Pm", atomicNumber: 61, mass: 145, electronegativity: 1.13, oxidationStates: [3], position: { row: 8, col: 7 }, group: "Lantanido", electronConfig: "[Xe] 4f⁵ 6s²" },
-            { name: "Samario", symbol: "Sm", atomicNumber: 62, mass: 150.36, electronegativity: 1.17, oxidationStates: [2, 3], position: { row: 8, col: 8 }, group: "Lantanido", electronConfig: "[Xe] 4f⁶ 6s²" },
-            { name: "Europio", symbol: "Eu", atomicNumber: 63, mass: 151.964, electronegativity: 1.2, oxidationStates: [2, 3], position: { row: 8, col: 9 }, group: "Lantanido", electronConfig: "[Xe] 4f⁷ 6s²" },
-            { name: "Gadolinio", symbol: "Gd", atomicNumber: 64, mass: 157.25, electronegativity: 1.2, oxidationStates: [3], position: { row: 8, col: 10 }, group: "Lantanido", electronConfig: "[Xe] 4f⁷ 5d¹ 6s²" },
-            { name: "Terbio", symbol: "Tb", atomicNumber: 65, mass: 158.925, electronegativity: 1.2, oxidationStates: [3, 4], position: { row: 8, col: 11 }, group: "Lantanido", electronConfig: "[Xe] 4f⁹ 6s²" },
-            { name: "Disprosio", symbol: "Dy", atomicNumber: 66, mass: 162.5, electronegativity: 1.22, oxidationStates: [3], position: { row: 8, col: 12 }, group: "Lantanido", electronConfig: "[Xe] 4f¹⁰ 6s²" },
-            { name: "Holmio", symbol: "Ho", atomicNumber: 67, mass: 164.93, electronegativity: 1.23, oxidationStates: [3], position: { row: 8, col: 13 }, group: "Lantanido", electronConfig: "[Xe] 4f¹¹ 6s²" },
-            { name: "Erbio", symbol: "Er", atomicNumber: 68, mass: 167.259, electronegativity: 1.24, oxidationStates: [3], position: { row: 8, col: 14 }, group: "Lantanido", electronConfig: "[Xe] 4f¹² 6s²" },
-            { name: "Tulio", symbol: "Tm", atomicNumber: 69, mass: 168.934, electronegativity: 1.25, oxidationStates: [3], position: { row: 8, col: 15 }, group: "Lantanido", electronConfig: "[Xe] 4f¹³ 6s²" },
-            { name: "Iterbio", symbol: "Yb", atomicNumber: 70, mass: 173.045, electronegativity: 1.1, oxidationStates: [2, 3], position: { row: 8, col: 16 }, group: "Lantanido", electronConfig: "[Xe] 4f¹⁴ 6s²" },
-            { name: "Lutecio", symbol: "Lu", atomicNumber: 71, mass: 174.967, electronegativity: 1.27, oxidationStates: [3], position: { row: 8, col: 17 }, group: "Lantanido", electronConfig: "[Xe] 4f¹⁴ 5d¹ 6s²" },
-            { name: "Hafnio", symbol: "Hf", atomicNumber: 72, mass: 178.49, electronegativity: 1.3, oxidationStates: [4], position: { row: 6, col: 4 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d² 6s²" },
-            { name: "Tantalio", symbol: "Ta", atomicNumber: 73, mass: 180.948, electronegativity: 1.5, oxidationStates: [5], position: { row: 6, col: 5 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d³ 6s²" },
-            { name: "Wolframio", symbol: "W", atomicNumber: 74, mass: 183.84, electronegativity: 2.36, oxidationStates: [2, 3, 4, 5, 6], position: { row: 6, col: 6 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d⁴ 6s²" },
-            { name: "Renio", symbol: "Re", atomicNumber: 75, mass: 186.207, electronegativity: 1.9, oxidationStates: [-1, 2, 4, 6, 7], position: { row: 6, col: 7 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d⁵ 6s²" },
-            { name: "Osmio", symbol: "Os", atomicNumber: 76, mass: 190.23, electronegativity: 2.2, oxidationStates: [2, 3, 4, 6, 8], position: { row: 6, col: 8 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d⁶ 6s²" },
-            { name: "Iridio", symbol: "Ir", atomicNumber: 77, mass: 192.217, electronegativity: 2.2, oxidationStates: [3, 4], position: { row: 6, col: 9 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d⁷ 6s²" },
-            { name: "Platino", symbol: "Pt", atomicNumber: 78, mass: 195.084, electronegativity: 2.28, oxidationStates: [2, 4], position: { row: 6, col: 10 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d⁹ 6s¹" },
-            { name: "Oro", symbol: "Au", atomicNumber: 79, mass: 196.967, electronegativity: 2.54, oxidationStates: [1, 3], position: { row: 6, col: 11 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s¹" },
-            { name: "Mercurio", symbol: "Hg", atomicNumber: 80, mass: 200.592, electronegativity: 2.0, oxidationStates: [1, 2], position: { row: 6, col: 12 }, group: "Metal Post-Transición", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s²" },
-            { name: "Talio", symbol: "Tl", atomicNumber: 81, mass: 204.38, electronegativity: 2.04, oxidationStates: [1, 3], position: { row: 6, col: 13 }, group: "Metal Post-Transición", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹" },
-            { name: "Plomo", symbol: "Pb", atomicNumber: 82, mass: 207.2, electronegativity: 2.33, oxidationStates: [2, 4], position: { row: 6, col: 14 }, group: "Metal Post-Transición", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²" },
-            { name: "Bismuto", symbol: "Bi", atomicNumber: 83, mass: 208.98, electronegativity: 2.02, oxidationStates: [3, 5], position: { row: 6, col: 15 }, group: "Metal Post-Transición", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³" },
-            { name: "Polonio", symbol: "Po", atomicNumber: 84, mass: 209, electronegativity: 2.0, oxidationStates: [2, 4], position: { row: 6, col: 16 }, group: "Metal Post-Transición", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴" },
-            { name: "Astato", symbol: "At", atomicNumber: 85, mass: 210, electronegativity: 2.2, oxidationStates: [-1, 1, 3, 5], position: { row: 6, col: 17 }, group: "Halógeno", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵" },
-            { name: "Radón", symbol: "Rn", atomicNumber: 86, mass: 222, electronegativity: null, oxidationStates: [0], position: { row: 6, col: 18 }, group: "Gas Noble", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶" },
-            { name: "Francio", symbol: "Fr", atomicNumber: 87, mass: 223, electronegativity: 0.7, oxidationStates: [1], position: { row: 7, col: 1 }, group: "Metal Alcalino", electronConfig: "[Rn] 7s¹" },
-            { name: "Radio", symbol: "Ra", atomicNumber: 88, mass: 226, electronegativity: 0.9, oxidationStates: [2], position: { row: 7, col: 2 }, group: "Metal Alcalinotérreo", electronConfig: "[Rn] 7s²" },
-            { name: "Actinio", symbol: "Ac", atomicNumber: 89, mass: 227, electronegativity: 1.1, oxidationStates: [3], position: { row: 7, col: 3 }, group: "Actínido", electronConfig: "[Rn] 6d¹ 7s²" },
-            { name: "Torio", symbol: "Th", atomicNumber: 90, mass: 232.038, electronegativity: 1.3, oxidationStates: [4], position: { row: 9, col: 4 }, group: "Actínido", electronConfig: "[Rn] 6d² 7s²" },
-            { name: "Protactinio", symbol: "Pa", atomicNumber: 91, mass: 231.036, electronegativity: 1.5, oxidationStates: [5], position: { row: 9, col: 5 }, group: "Actínido", electronConfig: "[Rn] 5f² 6d¹ 7s²" },
-            { name: "Uranio", symbol: "U", atomicNumber: 92, mass: 238.029, electronegativity: 1.38, oxidationStates: [3, 4, 5, 6], position: { row: 9, col: 6 }, group: "Actínido", electronConfig: "[Rn] 5f³ 6d¹ 7s²" },
-            { name: "Neptunio", symbol: "Np", atomicNumber: 93, mass: 237, electronegativity: 1.36, oxidationStates: [3, 4, 5, 6], position: { row: 9, col: 7 }, group: "Actínido", electronConfig: "[Rn] 5f⁴ 6d¹ 7s²" },
-            { name: "Plutonio", symbol: "Pu", atomicNumber: 94, mass: 244, electronegativity: 1.28, oxidationStates: [3, 4, 5, 6], position: { row: 9, col: 8 }, group: "Actínido", electronConfig: "[Rn] 5f⁶ 7s²" },
-            { name: "Americio", symbol: "Am", atomicNumber: 95, mass: 243, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 9 }, group: "Actínido", electronConfig: "[Rn] 5f⁷ 7s²" },
-            { name: "Curio", symbol: "Cm", atomicNumber: 96, mass: 247, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 10 }, group: "Actínido", electronConfig: "[Rn] 5f⁷ 6d¹ 7s²" },
-            { name: "Berkelio", symbol: "Bk", atomicNumber: 97, mass: 247, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 11 }, group: "Actínido", electronConfig: "[Rn] 5f⁹ 7s²" },
-            { name: "Californio", symbol: "Cf", atomicNumber: 98, mass: 251, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 12 }, group: "Actínido", electronConfig: "[Rn] 5f¹⁰ 7s²" },
-            { name: "Einsteinio", symbol: "Es", atomicNumber: 99, mass: 252, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 13 }, group: "Actínido", electronConfig: "[Rn] 5f¹¹ 7s²" },
-            { name: "Fermio", symbol: "Fm", atomicNumber: 100, mass: 257, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 14 }, group: "Actínido", electronConfig: "[Rn] 5f¹² 7s²" },
-            { name: "Mendelevio", symbol: "Md", atomicNumber: 101, mass: 258, electronegativity: 1.3, oxidationStates: [2, 3], position: { row: 9, col: 15 }, group: "Actínido", electronConfig: "[Rn] 5f¹³ 7s²" },
-            { name: "Nobelio", symbol: "No", atomicNumber: 102, mass: 259, electronegativity: 1.3, oxidationStates: [2, 3], position: { row: 9, col: 16 }, group: "Actínido", electronConfig: "[Rn] 5f¹⁴ 7s²" },
-            { name: "Laurencio", symbol: "Lr", atomicNumber: 103, mass: 262, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 17 }, group: "Actínido", electronConfig: "[Rn] 5f¹⁴ 6d¹ 7s²" },
-            { name: "Rutherfordio", symbol: "Rf", atomicNumber: 104, mass: 267, electronegativity: null, oxidationStates: [4], position: { row: 7, col: 4 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d² 7s²" },
-            { name: "Dubnio", symbol: "Db", atomicNumber: 105, mass: 268, electronegativity: null, oxidationStates: [5], position: { row: 7, col: 5 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d³ 7s²" },
-            { name: "Seaborgio", symbol: "Sg", atomicNumber: 106, mass: 269, electronegativity: null, oxidationStates: [6], position: { row: 7, col: 6 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁴ 7s²" },
-            { name: "Bohrio", symbol: "Bh", atomicNumber: 107, mass: 270, electronegativity: null, oxidationStates: [7], position: { row: 7, col: 7 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁵ 7s²" },
-            { name: "Hassio", symbol: "Hs", atomicNumber: 108, mass: 269, electronegativity: null, oxidationStates: [8], position: { row: 7, col: 8 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁶ 7s²" },
-            { name: "Meitnerio", symbol: "Mt", atomicNumber: 109, mass: 278, electronegativity: null, oxidationStates: [], position: { row: 7, col: 9 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁷ 7s²" },
-            { name: "Darmstadtio", symbol: "Ds", atomicNumber: 110, mass: 281, electronegativity: null, oxidationStates: [], position: { row: 7, col: 10 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁸ 7s²" },
-            { name: "Roentgenio", symbol: "Rg", atomicNumber: 111, mass: 282, electronegativity: null, oxidationStates: [], position: { row: 7, col: 11 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁹ 7s²" },
-            { name: "Copernicio", symbol: "Cn", atomicNumber: 112, mass: 285, electronegativity: null, oxidationStates: [], position: { row: 7, col: 12 }, group: "Metal Post-Transición", electronConfig: "[Of] 5f¹⁴ 6d¹⁰ 7s²" },
-            { name: "Nihonio", symbol: "Nh", atomicNumber: 113, mass: 286, electronegativity: null, oxidationStates: [], position: { row: 7, col: 13 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹" },
-            { name: "Flerovio", symbol: "Fl", atomicNumber: 114, mass: 289, electronegativity: null, oxidationStates: [], position: { row: 7, col: 14 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²" },
-            { name: "Moscovio", symbol: "Mc", atomicNumber: 115, mass: 290, electronegativity: null, oxidationStates: [], position: { row: 7, col: 15 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³" },
-            { name: "Livermorio", symbol: "Lv", atomicNumber: 116, mass: 293, electronegativity: null, oxidationStates: [], position: { row: 7, col: 16 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴" },
-            { name: "Teneso", symbol: "Ts", atomicNumber: 117, mass: 294, electronegativity: null, oxidationStates: [], position: { row: 7, col: 17 }, group: "Halógeno", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵" },
-            { name: "Oganesón", symbol: "Og", atomicNumber: 118, mass: 294, electronegativity: null, oxidationStates: [], position: { row: 7, col: 18 }, group: "Gas Noble", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶" },
+            { name: "Hidrógeno", symbol: "H", atomicNumber: 1, mass: 1.008, electronegativity: 2.20, oxidationStates: [-1, 1], position: { row: 1, col: 1 }, group: "No Metal", electronConfig: "1s¹", valenceElectrons: 1 },
+            { name: "Helio", symbol: "He", atomicNumber: 2, mass: 4.002, electronegativity: null, oxidationStates: [0], position: { row: 1, col: 18 }, group: "Gas Noble", electronConfig: "1s²", valenceElectrons: 2 },
+            { name: "Litio", symbol: "Li", atomicNumber: 3, mass: 6.941, electronegativity: 0.98, oxidationStates: [1], position: { row: 2, col: 1 }, group: "Metal Alcalino", electronConfig: "[He] 2s¹", valenceElectrons: 1 },
+            { name: "Berilio", symbol: "Be", atomicNumber: 4, mass: 9.012, electronegativity: 1.57, oxidationStates: [2], position: { row: 2, col: 2 }, group: "Metal Alcalinotérreo", electronConfig: "[He] 2s²", valenceElectrons: 2 },
+            { name: "Boro", symbol: "B", atomicNumber: 5, mass: 10.811, electronegativity: 2.04, oxidationStates: [3], position: { row: 2, col: 13 }, group: "Metaloides", electronConfig: "[He] 2s² 2p¹", valenceElectrons: 3 },
+            { name: "Carbono", symbol: "C", atomicNumber: 6, mass: 12.011, electronegativity: 2.55, oxidationStates: [-4, -2, 2, 4], position: { row: 2, col: 14 }, group: "No Metal", electronConfig: "[He] 2s² 2p²", valenceElectrons: 4 },
+            { name: "Nitrógeno", symbol: "N", atomicNumber: 7, mass: 14.007, electronegativity: 3.04, oxidationStates: [-3, -2, -1, 1, 2, 3, 4, 5], position: { row: 2, col: 15 }, group: "No Metal", electronConfig: "[He] 2s² 2p³", valenceElectrons: 5 },
+            { name: "Oxígeno", symbol: "O", atomicNumber: 8, mass: 15.999, electronegativity: 3.44, oxidationStates: [-2, -1, 1, 2], position: { row: 2, col: 16 }, group: "No Metal", electronConfig: "[He] 2s² 2p⁴", valenceElectrons: 6 },
+            { name: "Flúor", symbol: "F", atomicNumber: 9, mass: 18.998, electronegativity: 3.98, oxidationStates: [-1], position: { row: 2, col: 17 }, group: "Halógeno", electronConfig: "[He] 2s² 2p⁵", valenceElectrons: 7 },
+            { name: "Neón", symbol: "Ne", atomicNumber: 10, mass: 20.180, electronegativity: null, oxidationStates: [0], position: { row: 2, col: 18 }, group: "Gas Noble", electronConfig: "[He] 2s² 2p⁶", valenceElectrons: 8 },
+            { name: "Sodio", symbol: "Na", atomicNumber: 11, mass: 22.990, electronegativity: 0.93, oxidationStates: [1], position: { row: 3, col: 1 }, group: "Metal Alcalino", electronConfig: "[Ne] 3s¹", valenceElectrons: 1 },
+            { name: "Magnesio", symbol: "Mg", atomicNumber: 12, mass: 24.305, electronegativity: 1.31, oxidationStates: [2], position: { row: 3, col: 2 }, group: "Metal Alcalinotérreo", electronConfig: "[Ne] 3s²", valenceElectrons: 2 },
+            { name: "Aluminio", symbol: "Al", atomicNumber: 13, mass: 26.982, electronegativity: 1.61, oxidationStates: [3], position: { row: 3, col: 13 }, group: "Metal Post-Transición", electronConfig: "[Ne] 3s² 3p¹", valenceElectrons: 3 },
+            { name: "Silicio", symbol: "Si", atomicNumber: 14, mass: 28.085, electronegativity: 1.90, oxidationStates: [-4, 2, 4], position: { row: 3, col: 14 }, group: "Metaloides", electronConfig: "[Ne] 3s² 3p²", valenceElectrons: 4 },
+            { name: "Fósforo", symbol: "P", atomicNumber: 15, mass: 30.974, electronegativity: 2.19, oxidationStates: [-3, 3, 5], position: { row: 3, col: 15 }, group: "No Metal", electronConfig: "[Ne] 3s² 3p³", valenceElectrons: 5 },
+            { name: "Azufre", symbol: "S", atomicNumber: 16, mass: 32.06, electronegativity: 2.58, oxidationStates: [-2, 2, 4, 6], position: { row: 3, col: 16 }, group: "No Metal", electronConfig: "[Ne] 3s² 3p⁴", valenceElectrons: 6 },
+            { name: "Cloro", symbol: "Cl", atomicNumber: 17, mass: 35.45, electronegativity: 3.16, oxidationStates: [-1, 1, 3, 5, 7], position: { row: 3, col: 17 }, group: "Halógeno", electronConfig: "[Ne] 3s² 3p⁵", valenceElectrons: 7 },
+            { name: "Argón", symbol: "Ar", atomicNumber: 18, mass: 39.948, electronegativity: null, oxidationStates: [0], position: { row: 3, col: 18 }, group: "Gas Noble", electronConfig: "[Ne] 3s² 3p⁶", valenceElectrons: 8 },
+            { name: "Potasio", symbol: "K", atomicNumber: 19, mass: 39.098, electronegativity: 0.82, oxidationStates: [1], position: { row: 4, col: 1 }, group: "Metal Alcalino", electronConfig: "[Ar] 4s¹", valenceElectrons: 1 },
+            { name: "Calcio", symbol: "Ca", atomicNumber: 20, mass: 40.078, electronegativity: 1.00, oxidationStates: [2], position: { row: 4, col: 2 }, group: "Metal Alcalinotérreo", electronConfig: "[Ar] 4s²", valenceElectrons: 2 },
+            { name: "Escandio", symbol: "Sc", atomicNumber: 21, mass: 44.956, electronegativity: 1.36, oxidationStates: [3], position: { row: 4, col: 3 }, group: "Metal de Transición", electronConfig: "[Ar] 3d¹ 4s²", valenceElectrons: 3 },
+            { name: "Titanio", symbol: "Ti", atomicNumber: 22, mass: 47.867, electronegativity: 1.54, oxidationStates: [2, 3, 4], position: { row: 4, col: 4 }, group: "Metal de Transición", electronConfig: "[Ar] 3d² 4s²", valenceElectrons: 4 },
+            { name: "Vanadio", symbol: "V", atomicNumber: 23, mass: 50.942, electronegativity: 1.63, oxidationStates: [2, 3, 4, 5], position: { row: 4, col: 5 }, group: "Metal de Transición", electronConfig: "[Ar] 3d³ 4s²", valenceElectrons: 5 },
+            { name: "Cromo", symbol: "Cr", atomicNumber: 24, mass: 51.996, electronegativity: 1.66, oxidationStates: [2, 3, 6], position: { row: 4, col: 6 }, group: "Metal de Transición", electronConfig: "[Ar] 3d⁵ 4s¹", valenceElectrons: 6 },
+            { name: "Manganeso", symbol: "Mn", atomicNumber: 25, mass: 54.938, electronegativity: 1.55, oxidationStates: [2, 3, 4, 6, 7], position: { row: 4, col: 7 }, group: "Metal de Transición", electronConfig: "[Ar] 3d⁵ 4s²", valenceElectrons: 7 },
+            { name: "Hierro", symbol: "Fe", atomicNumber: 26, mass: 55.845, electronegativity: 1.83, oxidationStates: [2, 3], position: { row: 4, col: 8 }, group: "Metal de Transición", electronConfig: "[Ar] 3d⁶ 4s²", valenceElectrons: 8 },
+            { name: "Cobalto", symbol: "Co", atomicNumber: 27, mass: 58.933, electronegativity: 1.88, oxidationStates: [2, 3], position: { row: 4, col: 9 }, group: "Metal de Transición", electronConfig: "[Ar] 3d⁷ 4s²", valenceElectrons: 9 },
+            { name: "Níquel", symbol: "Ni", atomicNumber: 28, mass: 58.693, electronegativity: 1.91, oxidationStates: [2], position: { row: 4, col: 10 }, group: "Metal de Transición", electronConfig: "[Ar] 3d⁸ 4s²", valenceElectrons: 10 },
+            { name: "Cobre", symbol: "Cu", atomicNumber: 29, mass: 63.546, electronegativity: 1.90, oxidationStates: [1, 2], position: { row: 4, col: 11 }, group: "Metal de Transición", electronConfig: "[Ar] 3d¹⁰ 4s¹", valenceElectrons: 11 },
+            { name: "Cinc", symbol: "Zn", atomicNumber: 30, mass: 65.38, electronegativity: 1.65, oxidationStates: [2], position: { row: 4, col: 12 }, group: "Metal Post-Transición", electronConfig: "[Ar] 3d¹⁰ 4s²", valenceElectrons: 12 },
+            { name: "Galio", symbol: "Ga", atomicNumber: 31, mass: 69.723, electronegativity: 1.81, oxidationStates: [3], position: { row: 4, col: 13 }, group: "Metal Post-Transición", electronConfig: "[Ar] 3d¹⁰ 4s² 4p¹", valenceElectrons: 3 },
+            { name: "Germanio", symbol: "Ge", atomicNumber: 32, mass: 72.63, electronegativity: 2.01, oxidationStates: [2, 4], position: { row: 4, col: 14 }, group: "Metaloides", electronConfig: "[Ar] 3d¹⁰ 4s² 4p²", valenceElectrons: 4 },
+            { name: "Arsénico", symbol: "As", atomicNumber: 33, mass: 74.922, electronegativity: 2.18, oxidationStates: [-3, 3, 5], position: { row: 4, col: 15 }, group: "Metaloides", electronConfig: "[Ar] 3d¹⁰ 4s² 4p³", valenceElectrons: 5 },
+            { name: "Selenio", symbol: "Se", atomicNumber: 34, mass: 78.971, electronegativity: 2.55, oxidationStates: [-2, 2, 4, 6], position: { row: 4, col: 16 }, group: "No Metal", electronConfig: "[Ar] 3d¹⁰ 4s² 4p⁴", valenceElectrons: 6 },
+            { name: "Bromo", symbol: "Br", atomicNumber: 35, mass: 79.904, electronegativity: 2.96, oxidationStates: [-1, 1, 3, 5], position: { row: 4, col: 17 }, group: "Halógeno", electronConfig: "[Ar] 3d¹⁰ 4s² 4p⁵", valenceElectrons: 7 },
+            { name: "Kriptón", symbol: "Kr", atomicNumber: 36, mass: 83.798, electronegativity: null, oxidationStates: [0], position: { row: 4, col: 18 }, group: "Gas Noble", electronConfig: "[Ar] 3d¹⁰ 4s² 4p⁶", valenceElectrons: 8 },
+            { name: "Rubidio", symbol: "Rb", atomicNumber: 37, mass: 85.468, electronegativity: 0.82, oxidationStates: [1], position: { row: 5, col: 1 }, group: "Metal Alcalino", electronConfig: "[Kr] 5s¹", valenceElectrons: 1 },
+            { name: "Estroncio", symbol: "Sr", atomicNumber: 38, mass: 87.62, electronegativity: 0.95, oxidationStates: [2], position: { row: 5, col: 2 }, group: "Metal Alcalinotérreo", electronConfig: "[Kr] 5s²", valenceElectrons: 2 },
+            { name: "Itrio", symbol: "Y", atomicNumber: 39, mass: 88.906, electronegativity: 1.22, oxidationStates: [3], position: { row: 5, col: 3 }, group: "Metal de Transición", electronConfig: "[Kr] 4d¹ 5s²", valenceElectrons: 3 },
+            { name: "Circonio", symbol: "Zr", atomicNumber: 40, mass: 91.224, electronegativity: 1.33, oxidationStates: [4], position: { row: 5, col: 4 }, group: "Metal de Transición", electronConfig: "[Kr] 4d² 5s²", valenceElectrons: 4 },
+            { name: "Niobio", symbol: "Nb", atomicNumber: 41, mass: 92.906, electronegativity: 1.6, oxidationStates: [3, 5], position: { row: 5, col: 5 }, group: "Metal de Transición", electronConfig: "[Kr] 4d⁴ 5s¹", valenceElectrons: 5 },
+            { name: "Molibdeno", symbol: "Mo", atomicNumber: 42, mass: 95.95, electronegativity: 2.16, oxidationStates: [2, 3, 4, 5, 6], position: { row: 5, col: 6 }, group: "Metal de Transición", electronConfig: "[Kr] 4d⁵ 5s¹", valenceElectrons: 6 },
+            { name: "Tecnecio", symbol: "Tc", atomicNumber: 43, mass: 98, electronegativity: 1.9, oxidationStates: [4, 7], position: { row: 5, col: 7 }, group: "Metal de Transición", electronConfig: "[Kr] 4d⁵ 5s²", valenceElectrons: 7 },
+            { name: "Rutenio", symbol: "Ru", atomicNumber: 44, mass: 101.07, electronegativity: 2.2, oxidationStates: [2, 3, 4, 6, 8], position: { row: 5, col: 8 }, group: "Metal de Transición", electronConfig: "[Kr] 4d⁷ 5s¹", valenceElectrons: 8 },
+            { name: "Rodio", symbol: "Rh", atomicNumber: 45, mass: 102.906, electronegativity: 2.28, oxidationStates: [3], position: { row: 5, col: 9 }, group: "Metal de Transición", electronConfig: "[Kr] 4d⁸ 5s¹", valenceElectrons: 9 },
+            { name: "Paladio", symbol: "Pd", atomicNumber: 46, mass: 106.42, electronegativity: 2.2, oxidationStates: [2, 4], position: { row: 5, col: 10 }, group: "Metal de Transición", electronConfig: "[Kr] 4d¹⁰", valenceElectrons: 10 },
+            { name: "Plata", symbol: "Ag", atomicNumber: 47, mass: 107.868, electronegativity: 1.93, oxidationStates: [1], position: { row: 5, col: 11 }, group: "Metal de Transición", electronConfig: "[Kr] 4d¹⁰ 5s¹", valenceElectrons: 11 },
+            { name: "Cadmio", symbol: "Cd", atomicNumber: 48, mass: 112.414, electronegativity: 1.69, oxidationStates: [2], position: { row: 5, col: 12 }, group: "Metal Post-Transición", electronConfig: "[Kr] 4d¹⁰ 5s²", valenceElectrons: 12 },
+            { name: "Indio", symbol: "In", atomicNumber: 49, mass: 114.818, electronegativity: 1.78, oxidationStates: [3], position: { row: 5, col: 13 }, group: "Metal Post-Transición", electronConfig: "[Kr] 4d¹⁰ 5s² 5p¹", valenceElectrons: 3 },
+            { name: "Estaño", symbol: "Sn", atomicNumber: 50, mass: 118.71, electronegativity: 1.96, oxidationStates: [2, 4], position: { row: 5, col: 14 }, group: "Metal Post-Transición", electronConfig: "[Kr] 4d¹⁰ 5s² 5p²", valenceElectrons: 4 },
+            { name: "Antimonio", symbol: "Sb", atomicNumber: 51, mass: 121.76, electronegativity: 2.05, oxidationStates: [-3, 3, 5], position: { row: 5, col: 15 }, group: "Metaloides", electronConfig: "[Kr] 4d¹⁰ 5s² 5p³", valenceElectrons: 5 },
+            { name: "Telurio", symbol: "Te", atomicNumber: 52, mass: 127.6, electronegativity: 2.1, oxidationStates: [-2, 2, 4, 6], position: { row: 5, col: 16 }, group: "Metaloides", electronConfig: "[Kr] 4d¹⁰ 5s² 5p⁴", valenceElectrons: 6 },
+            { name: "Yodo", symbol: "I", atomicNumber: 53, mass: 126.904, electronegativity: 2.5, oxidationStates: [-1, 1, 3, 5, 7], position: { row: 5, col: 17 }, group: "Halógeno", electronConfig: "[Kr] 4d¹⁰ 5s² 5p⁵", valenceElectrons: 7 },
+            { name: "Xenón", symbol: "Xe", atomicNumber: 54, mass: 131.293, electronegativity: null, oxidationStates: [0, 2, 4, 6, 8], position: { row: 5, col: 18 }, group: "Gas Noble", electronConfig: "[Kr] 4d¹⁰ 5s² 5p⁶", valenceElectrons: 8 },
+            { name: "Cesio", symbol: "Cs", atomicNumber: 55, mass: 132.905, electronegativity: 0.79, oxidationStates: [1], position: { row: 6, col: 1 }, group: "Metal Alcalino", electronConfig: "[Xe] 6s¹", valenceElectrons: 1 },
+            { name: "Bario", symbol: "Ba", atomicNumber: 56, mass: 137.327, electronegativity: 0.89, oxidationStates: [2], position: { row: 6, col: 2 }, group: "Metal Alcalinotérreo", electronConfig: "[Xe] 6s²", valenceElectrons: 2 },
+            { name: "Lantano", symbol: "La", atomicNumber: 57, mass: 138.905, electronegativity: 1.1, oxidationStates: [3], position: { row: 6, col: 3 }, group: "Lantanido", electronConfig: "[Xe] 5d¹ 6s²", valenceElectrons: 3 },
+            { name: "Cerio", symbol: "Ce", atomicNumber: 58, mass: 140.116, electronegativity: 1.12, oxidationStates: [3, 4], position: { row: 8, col: 4 }, group: "Lantanido", electronConfig: "[Xe] 4f¹ 5d¹ 6s²", valenceElectrons: 4 },
+            { name: "Praseodimio", symbol: "Pr", atomicNumber: 59, mass: 140.908, electronegativity: 1.13, oxidationStates: [3], position: { row: 8, col: 5 }, group: "Lantanido", electronConfig: "[Xe] 4f³ 6s²", valenceElectrons: 3 },
+            { name: "Neodimio", symbol: "Nd", atomicNumber: 60, mass: 144.242, electronegativity: 1.14, oxidationStates: [3], position: { row: 8, col: 6 }, group: "Lantanido", electronConfig: "[Xe] 4f⁴ 6s²", valenceElectrons: 3 },
+            { name: "Prometio", symbol: "Pm", atomicNumber: 61, mass: 145, electronegativity: 1.13, oxidationStates: [3], position: { row: 8, col: 7 }, group: "Lantanido", electronConfig: "[Xe] 4f⁵ 6s²", valenceElectrons: 3 },
+            { name: "Samario", symbol: "Sm", atomicNumber: 62, mass: 150.36, electronegativity: 1.17, oxidationStates: [2, 3], position: { row: 8, col: 8 }, group: "Lantanido", electronConfig: "[Xe] 4f⁶ 6s²", valenceElectrons: 3 },
+            { name: "Europio", symbol: "Eu", atomicNumber: 63, mass: 151.964, electronegativity: 1.2, oxidationStates: [2, 3], position: { row: 8, col: 9 }, group: "Lantanido", electronConfig: "[Xe] 4f⁷ 6s²", valenceElectrons: 3 },
+            { name: "Gadolinio", symbol: "Gd", atomicNumber: 64, mass: 157.25, electronegativity: 1.2, oxidationStates: [3], position: { row: 8, col: 10 }, group: "Lantanido", electronConfig: "[Xe] 4f⁷ 5d¹ 6s²", valenceElectrons: 3 },
+            { name: "Terbio", symbol: "Tb", atomicNumber: 65, mass: 158.925, electronegativity: 1.2, oxidationStates: [3, 4], position: { row: 8, col: 11 }, group: "Lantanido", electronConfig: "[Xe] 4f⁹ 6s²", valenceElectrons: 3 },
+            { name: "Disprosio", symbol: "Dy", atomicNumber: 66, mass: 162.5, electronegativity: 1.22, oxidationStates: [3], position: { row: 8, col: 12 }, group: "Lantanido", electronConfig: "[Xe] 4f¹⁰ 6s²", valenceElectrons: 3 },
+            { name: "Holmio", symbol: "Ho", atomicNumber: 67, mass: 164.93, electronegativity: 1.23, oxidationStates: [3], position: { row: 8, col: 13 }, group: "Lantanido", electronConfig: "[Xe] 4f¹¹ 6s²", valenceElectrons: 3 },
+            { name: "Erbio", symbol: "Er", atomicNumber: 68, mass: 167.259, electronegativity: 1.24, oxidationStates: [3], position: { row: 8, col: 14 }, group: "Lantanido", electronConfig: "[Xe] 4f¹² 6s²", valenceElectrons: 3 },
+            { name: "Tulio", symbol: "Tm", atomicNumber: 69, mass: 168.934, electronegativity: 1.25, oxidationStates: [3], position: { row: 8, col: 15 }, group: "Lantanido", electronConfig: "[Xe] 4f¹³ 6s²", valenceElectrons: 3 },
+            { name: "Iterbio", symbol: "Yb", atomicNumber: 70, mass: 173.045, electronegativity: 1.1, oxidationStates: [2, 3], position: { row: 8, col: 16 }, group: "Lantanido", electronConfig: "[Xe] 4f¹⁴ 6s²", valenceElectrons: 3 },
+            { name: "Lutecio", symbol: "Lu", atomicNumber: 71, mass: 174.967, electronegativity: 1.27, oxidationStates: [3], position: { row: 8, col: 17 }, group: "Lantanido", electronConfig: "[Xe] 4f¹⁴ 5d¹ 6s²", valenceElectrons: 3 },
+            { name: "Hafnio", symbol: "Hf", atomicNumber: 72, mass: 178.49, electronegativity: 1.3, oxidationStates: [4], position: { row: 6, col: 4 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d² 6s²", valenceElectrons: 4 },
+            { name: "Tantalio", symbol: "Ta", atomicNumber: 73, mass: 180.948, electronegativity: 1.5, oxidationStates: [5], position: { row: 6, col: 5 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d³ 6s²", valenceElectrons: 5 },
+            { name: "Wolframio", symbol: "W", atomicNumber: 74, mass: 183.84, electronegativity: 2.36, oxidationStates: [2, 3, 4, 5, 6], position: { row: 6, col: 6 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d⁴ 6s²", valenceElectrons: 6 },
+            { name: "Renio", symbol: "Re", atomicNumber: 75, mass: 186.207, electronegativity: 1.9, oxidationStates: [-1, 2, 4, 6, 7], position: { row: 6, col: 7 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d⁵ 6s²", valenceElectrons: 7 },
+            { name: "Osmio", symbol: "Os", atomicNumber: 76, mass: 190.23, electronegativity: 2.2, oxidationStates: [2, 3, 4, 6, 8], position: { row: 6, col: 8 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d⁶ 6s²", valenceElectrons: 8 },
+            { name: "Iridio", symbol: "Ir", atomicNumber: 77, mass: 192.217, electronegativity: 2.2, oxidationStates: [3, 4], position: { row: 6, col: 9 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d⁷ 6s²", valenceElectrons: 9 },
+            { name: "Platino", symbol: "Pt", atomicNumber: 78, mass: 195.084, electronegativity: 2.28, oxidationStates: [2, 4], position: { row: 6, col: 10 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d⁹ 6s¹", valenceElectrons: 10 },
+            { name: "Oro", symbol: "Au", atomicNumber: 79, mass: 196.967, electronegativity: 2.54, oxidationStates: [1, 3], position: { row: 6, col: 11 }, group: "Metal de Transición", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s¹", valenceElectrons: 11 },
+            { name: "Mercurio", symbol: "Hg", atomicNumber: 80, mass: 200.592, electronegativity: 2.0, oxidationStates: [1, 2], position: { row: 6, col: 12 }, group: "Metal Post-Transición", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s²", valenceElectrons: 12 },
+            { name: "Talio", symbol: "Tl", atomicNumber: 81, mass: 204.38, electronegativity: 2.04, oxidationStates: [1, 3], position: { row: 6, col: 13 }, group: "Metal Post-Transición", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹", valenceElectrons: 3 },
+            { name: "Plomo", symbol: "Pb", atomicNumber: 82, mass: 207.2, electronegativity: 2.33, oxidationStates: [2, 4], position: { row: 6, col: 14 }, group: "Metal Post-Transición", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²", valenceElectrons: 4 },
+            { name: "Bismuto", symbol: "Bi", atomicNumber: 83, mass: 208.98, electronegativity: 2.02, oxidationStates: [3, 5], position: { row: 6, col: 15 }, group: "Metal Post-Transición", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³", valenceElectrons: 5 },
+            { name: "Polonio", symbol: "Po", atomicNumber: 84, mass: 209, electronegativity: 2.0, oxidationStates: [2, 4], position: { row: 6, col: 16 }, group: "Metal Post-Transición", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴", valenceElectrons: 6 },
+            { name: "Astato", symbol: "At", atomicNumber: 85, mass: 210, electronegativity: 2.2, oxidationStates: [-1, 1, 3, 5], position: { row: 6, col: 17 }, group: "Halógeno", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵", valenceElectrons: 7 },
+            { name: "Radón", symbol: "Rn", atomicNumber: 86, mass: 222, electronegativity: null, oxidationStates: [0], position: { row: 6, col: 18 }, group: "Gas Noble", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶", valenceElectrons: 8 },
+            { name: "Francio", symbol: "Fr", atomicNumber: 87, mass: 223, electronegativity: 0.7, oxidationStates: [1], position: { row: 7, col: 1 }, group: "Metal Alcalino", electronConfig: "[Rn] 7s¹", valenceElectrons: 1 },
+            { name: "Radio", symbol: "Ra", atomicNumber: 88, mass: 226, electronegativity: 0.9, oxidationStates: [2], position: { row: 7, col: 2 }, group: "Metal Alcalinotérreo", electronConfig: "[Rn] 7s²", valenceElectrons: 2 },
+            { name: "Actinio", symbol: "Ac", atomicNumber: 89, mass: 227, electronegativity: 1.1, oxidationStates: [3], position: { row: 7, col: 3 }, group: "Actínido", electronConfig: "[Rn] 6d¹ 7s²", valenceElectrons: 3 },
+            { name: "Torio", symbol: "Th", atomicNumber: 90, mass: 232.038, electronegativity: 1.3, oxidationStates: [4], position: { row: 9, col: 4 }, group: "Actínido", electronConfig: "[Rn] 6d² 7s²", valenceElectrons: 4 },
+            { name: "Protactinio", symbol: "Pa", atomicNumber: 91, mass: 231.036, electronegativity: 1.5, oxidationStates: [5], position: { row: 9, col: 5 }, group: "Actínido", electronConfig: "[Rn] 5f² 6d¹ 7s²", valenceElectrons: 5 },
+            { name: "Uranio", symbol: "U", atomicNumber: 92, mass: 238.029, electronegativity: 1.38, oxidationStates: [3, 4, 5, 6], position: { row: 9, col: 6 }, group: "Actínido", electronConfig: "[Rn] 5f³ 6d¹ 7s²", valenceElectrons: 6 },
+            { name: "Neptunio", symbol: "Np", atomicNumber: 93, mass: 237, electronegativity: 1.36, oxidationStates: [3, 4, 5, 6], position: { row: 9, col: 7 }, group: "Actínido", electronConfig: "[Rn] 5f⁴ 6d¹ 7s²", valenceElectrons: 7 },
+            { name: "Plutonio", symbol: "Pu", atomicNumber: 94, mass: 244, electronegativity: 1.28, oxidationStates: [3, 4, 5, 6], position: { row: 9, col: 8 }, group: "Actínido", electronConfig: "[Rn] 5f⁶ 7s²", valenceElectrons: 8 },
+            { name: "Americio", symbol: "Am", atomicNumber: 95, mass: 243, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 9 }, group: "Actínido", electronConfig: "[Rn] 5f⁷ 7s²", valenceElectrons: 9 },
+            { name: "Curio", symbol: "Cm", atomicNumber: 96, mass: 247, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 10 }, group: "Actínido", electronConfig: "[Rn] 5f⁷ 6d¹ 7s²", valenceElectrons: 10 },
+            { name: "Berkelio", symbol: "Bk", atomicNumber: 97, mass: 247, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 11 }, group: "Actínido", electronConfig: "[Rn] 5f⁹ 7s²", valenceElectrons: 11 },
+            { name: "Californio", symbol: "Cf", atomicNumber: 98, mass: 251, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 12 }, group: "Actínido", electronConfig: "[Rn] 5f¹⁰ 7s²", valenceElectrons: 12 },
+            { name: "Einsteinio", symbol: "Es", atomicNumber: 99, mass: 252, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 13 }, group: "Actínido", electronConfig: "[Rn] 5f¹¹ 7s²", valenceElectrons: 13 },
+            { name: "Fermio", symbol: "Fm", atomicNumber: 100, mass: 257, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 14 }, group: "Actínido", electronConfig: "[Rn] 5f¹² 7s²", valenceElectrons: 14 },
+            { name: "Mendelevio", symbol: "Md", atomicNumber: 101, mass: 258, electronegativity: 1.3, oxidationStates: [2, 3], position: { row: 9, col: 15 }, group: "Actínido", electronConfig: "[Rn] 5f¹³ 7s²", valenceElectrons: 15 },
+            { name: "Nobelio", symbol: "No", atomicNumber: 102, mass: 259, electronegativity: 1.3, oxidationStates: [2, 3], position: { row: 9, col: 16 }, group: "Actínido", electronConfig: "[Rn] 5f¹⁴ 7s²", valenceElectrons: 16 },
+            { name: "Laurencio", symbol: "Lr", atomicNumber: 103, mass: 262, electronegativity: 1.3, oxidationStates: [3], position: { row: 9, col: 17 }, group: "Actínido", electronConfig: "[Rn] 5f¹⁴ 6d¹ 7s²", valenceElectrons: 3 },
+            { name: "Rutherfordio", symbol: "Rf", atomicNumber: 104, mass: 267, electronegativity: null, oxidationStates: [4], position: { row: 7, col: 4 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d² 7s²", valenceElectrons: 4 },
+            { name: "Dubnio", symbol: "Db", atomicNumber: 105, mass: 268, electronegativity: null, oxidationStates: [5], position: { row: 7, col: 5 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d³ 7s²", valenceElectrons: 5 },
+            { name: "Seaborgio", symbol: "Sg", atomicNumber: 106, mass: 269, electronegativity: null, oxidationStates: [6], position: { row: 7, col: 6 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁴ 7s²", valenceElectrons: 6 },
+            { name: "Bohrio", symbol: "Bh", atomicNumber: 107, mass: 270, electronegativity: null, oxidationStates: [7], position: { row: 7, col: 7 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁵ 7s²", valenceElectrons: 7 },
+            { name: "Hassio", symbol: "Hs", atomicNumber: 108, mass: 269, electronegativity: null, oxidationStates: [8], position: { row: 7, col: 8 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁶ 7s²", valenceElectrons: 8 },
+            { name: "Meitnerio", symbol: "Mt", atomicNumber: 109, mass: 278, electronegativity: null, oxidationStates: [], position: { row: 7, col: 9 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁷ 7s²", valenceElectrons: 9 },
+            { name: "Darmstadtio", symbol: "Ds", atomicNumber: 110, mass: 281, electronegativity: null, oxidationStates: [], position: { row: 7, col: 10 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁸ 7s²", valenceElectrons: 10 },
+            { name: "Roentgenio", symbol: "Rg", atomicNumber: 111, mass: 282, electronegativity: null, oxidationStates: [], position: { row: 7, col: 11 }, group: "Metal de Transición", electronConfig: "[Rn] 5f¹⁴ 6d⁹ 7s²", valenceElectrons: 11 },
+            { name: "Copernicio", symbol: "Cn", atomicNumber: 112, mass: 285, electronegativity: null, oxidationStates: [], position: { row: 7, col: 12 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s²", valenceElectrons: 12 },
+            { name: "Nihonio", symbol: "Nh", atomicNumber: 113, mass: 286, electronegativity: null, oxidationStates: [], position: { row: 7, col: 13 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹", valenceElectrons: 3 },
+            { name: "Flerovio", symbol: "Fl", atomicNumber: 114, mass: 289, electronegativity: null, oxidationStates: [], position: { row: 7, col: 14 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²", valenceElectrons: 4 },
+            { name: "Moscovio", symbol: "Mc", atomicNumber: 115, mass: 290, electronegativity: null, oxidationStates: [], position: { row: 7, col: 15 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³", valenceElectrons: 5 },
+            { name: "Livermorio", symbol: "Lv", atomicNumber: 116, mass: 293, electronegativity: null, oxidationStates: [], position: { row: 7, col: 16 }, group: "Metal Post-Transición", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴", valenceElectrons: 6 },
+            { name: "Teneso", symbol: "Ts", atomicNumber: 117, mass: 294, electronegativity: null, oxidationStates: [], position: { row: 7, col: 17 }, group: "Halógeno", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵", valenceElectrons: 7 },
+            { name: "Oganesón", symbol: "Og", atomicNumber: 118, mass: 294, electronegativity: null, oxidationStates: [], position: { row: 7, col: 18 }, group: "Gas Noble", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶", valenceElectrons: 8 }
         ];
 
         const periodicTable = document.getElementById('periodicTable');
@@ -546,6 +594,7 @@
                     <div class="oxidation">EO: ${element.oxidationStates.join(', ') || 'N/A'}</div>
                     <div class="group">${element.group}</div>
                     <div class="electron">${element.electronConfig}</div>
+                    <div class="valence">EV: ${element.valenceElectrons}</div>
                 </div>
             `;
             document.body.appendChild(modal);
@@ -590,14 +639,14 @@
         }
 
         const oxideQuiz = [
-            { formula: "Na2O", name: "Óxido de disodio" },
-            { formula: "MgO", name: "Óxido de magnesio" },
-            { formula: "Al2O3", name: "Óxido de dialuminio" },
+            { formula: "Na2O", name: "Monóxido de disodio" },
+            { formula: "MgO", name: "Monóxido de magnesio" },
+            { formula: "Al2O3", name: "Trióxido de dialuminio" },
             { formula: "SO2", name: "Dióxido de azufre" },
             { formula: "P2O5", name: "Pentóxido de difósforo" },
             { formula: "Cl2O7", name: "Heptóxido de dicloro" },
-            { formula: "CaO", name: "Óxido de calcio" },
-            { formula: "Fe2O3", name: "Óxido de dihierro" },
+            { formula: "CaO", name: "Monóxido de calcio" },
+            { formula: "Fe2O3", name: "Trióxido de dihierro" },
             { formula: "CO2", name: "Dióxido de carbono" },
             { formula: "N2O5", name: "Pentóxido de dinitrógeno" }
         ];
@@ -615,6 +664,19 @@
             { formula: "H2SeO4", name: "Ácido selénico" }
         ];
 
+        const hydroxideQuiz = [
+            { formula: "NaOH", name: "Hidróxido de sodio" },
+            { formula: "KOH", name: "Hidróxido de potasio" },
+            { formula: "Ca(OH)2", name: "Hidróxido de calcio" },
+            { formula: "Mg(OH)2", name: "Hidróxido de magnesio" },
+            { formula: "Al(OH)3", name: "Hidróxido de aluminio" },
+            { formula: "Fe(OH)3", name: "Hidróxido férrico" },
+            { formula: "Fe(OH)2", name: "Hidróxido ferroso" },
+            { formula: "Cu(OH)2", name: "Hidróxido cúprico" },
+            { formula: "Zn(OH)2", name: "Hidróxido de zinc" },
+            { formula: "Ba(OH)2", name: "Hidróxido de bario" }
+        ];
+
         function normalizeString(str) {
             return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         }
@@ -622,12 +684,15 @@
         function createQuiz(quizData, containerId, quizType) {
             const quizQuestions = document.getElementById(containerId);
             quizQuestions.innerHTML = '';
+            const mode = document.getElementById(`${quizType}QuizMode`).value;
             quizData.forEach((item, index) => {
                 const questionDiv = document.createElement('div');
                 questionDiv.className = 'quiz-question';
+                const questionText = mode === 'formulaToName' ? item.formula : item.name;
+                const placeholder = mode === 'formulaToName' ? 'Nombre del compuesto' : 'Fórmula del compuesto';
                 questionDiv.innerHTML = `
-                    <p>${index + 1}. ${item.formula}</p>
-                    <input type="text" id="${quizType}Answer${index}" placeholder="Nombre del compuesto">
+                    <p>${index + 1}. ${questionText}</p>
+                    <input type="text" id="${quizType}Answer${index}" placeholder="${placeholder}">
                     <button onclick="checkAnswer(${index}, '${quizType}')">Verificar</button>
                     <div id="${quizType}Feedback${index}" class="quiz-feedback"></div>
                 `;
@@ -636,17 +701,18 @@
         }
 
         function checkAnswer(index, quizType) {
-            const quizData = quizType === 'oxide' ? oxideQuiz : oxoacidQuiz;
+            const quizData = quizType === 'oxide' ? oxideQuiz : quizType === 'oxoacid' ? oxoacidQuiz : hydroxideQuiz;
+            const mode = document.getElementById(`${quizType}QuizMode`).value;
             const userAnswer = document.getElementById(`${quizType}Answer${index}`).value;
             const normalizedUserAnswer = normalizeString(userAnswer);
-            const normalizedCorrectAnswer = normalizeString(quizData[index].name);
+            const normalizedCorrectAnswer = normalizeString(mode === 'formulaToName' ? quizData[index].name : quizData[index].formula);
             const feedbackDiv = document.getElementById(`${quizType}Feedback${index}`);
 
             if (normalizedUserAnswer === normalizedCorrectAnswer) {
                 feedbackDiv.textContent = "¡Correcto!";
                 feedbackDiv.style.color = "green";
             } else {
-                feedbackDiv.textContent = `Incorrecto. La respuesta correcta es: ${quizData[index].name}`;
+                feedbackDiv.textContent = `Incorrecto. La respuesta correcta es: ${mode === 'formulaToName' ? quizData[index].name : quizData[index].formula}`;
                 feedbackDiv.style.color = "red";
             }
         }
@@ -658,6 +724,7 @@
         createGroupButtons();
         createQuiz(oxideQuiz, 'oxideQuizQuestions', 'oxide');
         createQuiz(oxoacidQuiz, 'oxoacidQuizQuestions', 'oxoacid');
+        createQuiz(hydroxideQuiz, 'hydroxideQuizQuestions', 'hydroxide');
     </script>
 </body>
 </html>
