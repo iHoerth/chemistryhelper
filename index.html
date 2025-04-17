@@ -22,10 +22,25 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            height: calc(100vh - 40px);
+        }
+
+        .left-column {
+            flex: 0 0 75%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .right-column {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
         }
 
         .search-section {
-            margin-bottom: 20px;
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
@@ -56,7 +71,6 @@
         }
 
         .group-buttons {
-            margin-bottom: 20px;
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
@@ -86,14 +100,14 @@
         .element-card {
             border: 1px solid #ddd;
             border-radius: 5px;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s;
             height: 80px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
         }
 
         .element-card:hover {
@@ -102,13 +116,19 @@
         }
 
         .element-card .symbol {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
         }
 
         .element-card .atomic-number {
-            font-size: 12px;
+            font-size: 10px;
             color: #666;
+        }
+
+        .element-card .oxidation-states {
+            font-size: 9px;
+            color: #777;
+            line-height: 1.2;
         }
 
         .modal {
@@ -240,7 +260,7 @@
         }
 
         .quiz-section {
-            margin-top: 40px;
+            margin-bottom: 40px;
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -272,6 +292,7 @@
             background-color: #f9f9f9;
             cursor: pointer;
             transition: border-color 0.3s;
+            min-width: 120px;
         }
 
         .quiz-toggle select:focus {
@@ -288,6 +309,7 @@
             background-color: #f9f9f9;
             border-radius: 8px;
             transition: background-color 0.3s;
+            flex-wrap: wrap;
         }
 
         .quiz-question:hover {
@@ -298,6 +320,7 @@
             font-weight: 500;
             color: #333;
             flex: 0 0 auto;
+            min-width: 60px;
         }
 
         .quiz-question input {
@@ -306,7 +329,8 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             background-color: #fff;
-            width: 200px;
+            flex: 1;
+            min-width: 150px;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
 
@@ -325,6 +349,8 @@
             cursor: pointer;
             font-size: 14px;
             transition: background-color 0.3s, transform 0.2s;
+            flex: 0 0 auto;
+            min-width: 80px;
         }
 
         .quiz-question button:hover {
@@ -335,11 +361,26 @@
         .quiz-feedback {
             color: red;
             font-size: 12px;
-            margin-left: 10px;
-            flex: 1;
+            flex: 1 1 100%;
+            margin-top: 5px;
         }
 
         @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .left-column, .right-column {
+                flex: 1 1 100%;
+                max-height: none;
+            }
+
+            .right-column {
+                overflow-y: visible;
+                padding-right: 0;
+            }
+
             .periodic-table {
                 grid-template-columns: repeat(9, 1fr);
             }
@@ -354,7 +395,19 @@
             }
 
             .element-card .atomic-number {
-                font-size: 10px;
+                font-size: 9px;
+            }
+
+            .element-card .oxidation-states {
+                font-size: 8px;
+            }
+
+            .quiz-question input {
+                min-width: 100px;
+            }
+
+            .quiz-question button {
+                min-width: 70px;
             }
         }
 
@@ -374,10 +427,12 @@
 
             .quiz-question input {
                 width: 100%;
+                min-width: 0;
             }
 
             .quiz-question button {
                 align-self: flex-start;
+                min-width: 60px;
             }
 
             .quiz-feedback {
@@ -389,94 +444,98 @@
 </head>
 <body>
     <div class="container">
-        <div class="search-section">
-            <select id="searchType">
-                <option value="nameOrSymbol">Nombre/Símbolo</option>
-                <option value="atomicNumber">Número Atómico</option>
-                <option value="electronegativity">Electronegatividad</option>
-                <option value="oxidationStates">Estados de Oxidación</option>
-            </select>
-            <input type="text" id="searchInput" placeholder="Buscar elementos...">
-        </div>
-        <div class="group-buttons" id="groupButtons"></div>
-        <div class="periodic-table" id="periodicTable"></div>
-        <div class="quiz-section">
-            <h2>Cuestionario de Óxidos</h2>
-            <div class="quiz-toggle">
-                <label for="oxideQuizMode">Modo:</label>
-                <select id="oxideQuizMode">
-                    <option value="formulaToName">Fórmula a Nombre</option>
-                    <option value="nameToFormula">Nombre a Fórmula</option>
+        <div class="left-column">
+            <div class="search-section">
+                <select id="searchType">
+                    <option value="nameOrSymbol">Nombre/Símbolo</option>
+                    <option value="atomicNumber">Número Atómico</option>
+                    <option value="electronegativity">Electronegatividad</option>
+                    <option value="oxidationStates">Estados de Oxidación</option>
                 </select>
-                <label for="oxideNomenclature">Nomenclatura:</label>
-                <select id="oxideNomenclature">
-                    <option value="systematic">Sistemática</option>
-                    <option value="traditional">Tradicional</option>
-                    <option value="stock">Stock</option>
-                </select>
+                <input type="text" id="searchInput" placeholder="Buscar elementos...">
             </div>
-            <div id="oxideQuizQuestions"></div>
+            <div class="group-buttons" id="groupButtons"></div>
+            <div class="periodic-table" id="periodicTable"></div>
         </div>
-        <div class="quiz-section">
-            <h2>Cuestionario de Oxoácidos</h2>
-            <div class="quiz-toggle">
-                <label for="oxoacidQuizMode">Modo:</label>
-                <select id="oxoacidQuizMode">
-                    <option value="formulaToName">Fórmula a Nombre</option>
-                    <option value="nameToFormula">Nombre a Fórmula</option>
-                </select>
-                <label for="oxoacidNomenclature">Nomenclatura:</label>
-                <select id="oxoacidNomenclature">
-                    <option value="systematic">Sistemática</option>
-                    <option value="traditional">Tradicional</option>
-                    <option value="stock">Stock</option>
-                </select>
+        <div class="right-column">
+            <div class="quiz-section">
+                <h2>Cuestionario de Óxidos</h2>
+                <div class="quiz-toggle">
+                    <label for="oxideQuizMode">Modo:</label>
+                    <select id="oxideQuizMode">
+                        <option value="formulaToName">Fórmula a Nombre</option>
+                        <option value="nameToFormula">Nombre a Fórmula</option>
+                    </select>
+                    <label for="oxideNomenclature">Nomenclatura:</label>
+                    <select id="oxideNomenclature">
+                        <option value="systematic">Sistemática</option>
+                        <option value="traditional">Tradicional</option>
+                        <option value="stock">Stock</option>
+                    </select>
+                </div>
+                <div id="oxideQuizQuestions"></div>
             </div>
-            <div id="oxoacidQuizQuestions"></div>
-        </div>
-        <div class="quiz-section">
-            <h2>Cuestionario de Hidróxidos</h2>
-            <div class="quiz-toggle">
-                <label for="hydroxideQuizMode">Modo:</label>
-                <select id="hydroxideQuizMode">
-                    <option value="formulaToName">Fórmula a Nombre</option>
-                    <option value="nameToFormula">Nombre a Fórmula</option>
-                </select>
-                <label for="hydroxideNomenclature">Nomenclatura:</label>
-                <select id="hydroxideNomenclature">
-                    <option value="systematic">Sistemática</option>
-                    <option value="traditional">Tradicional</option>
-                    <option value="stock">Stock</option>
-                </select>
+            <div class="quiz-section">
+                <h2>Cuestionario de Oxoácidos</h2>
+                <div class="quiz-toggle">
+                    <label for="oxoacidQuizMode">Modo:</label>
+                    <select id="oxoacidQuizMode">
+                        <option value="formulaToName">Fórmula a Nombre</option>
+                        <option value="nameToFormula">Nombre a Fórmula</option>
+                    </select>
+                    <label for="oxoacidNomenclature">Nomenclatura:</label>
+                    <select id="oxoacidNomenclature">
+                        <option value="systematic">Sistemática</option>
+                        <option value="traditional">Tradicional</option>
+                        <option value="stock">Stock</option>
+                    </select>
+                </div>
+                <div id="oxoacidQuizQuestions"></div>
             </div>
-            <div id="hydroxideQuizQuestions"></div>
-        </div>
-        <div class="quiz-section">
-            <h2>Cuestionario de Hidrácidos</h2>
-            <div class="quiz-toggle">
-                <label for="hidracidQuizMode">Modo:</label>
-                <select id="hidracidQuizMode">
-                    <option value="formulaToName">Fórmula a Nombre</option>
-                    <option value="nameToFormula">Nombre a Fórmula</option>
-                </select>
-                <label for="hidracidNomenclature">Nomenclatura:</label>
-                <select id="hidracidNomenclature">
-                    <option value="systematic">Sistemática</option>
-                    <option value="traditional">Tradicional</option>
-                </select>
+            <div class="quiz-section">
+                <h2>Cuestionario de Hidróxidos</h2>
+                <div class="quiz-toggle">
+                    <label for="hydroxideQuizMode">Modo:</label>
+                    <select id="hydroxideQuizMode">
+                        <option value="formulaToName">Fórmula a Nombre</option>
+                        <option value="nameToFormula">Nombre a Fórmula</option>
+                    </select>
+                    <label for="hydroxideNomenclature">Nomenclatura:</label>
+                    <select id="hydroxideNomenclature">
+                        <option value="systematic">Sistemática</option>
+                        <option value="traditional">Tradicional</option>
+                        <option value="stock">Stock</option>
+                    </select>
+                </div>
+                <div id="hydroxideQuizQuestions"></div>
             </div>
-            <div id="hidracidQuizQuestions"></div>
-        </div>
-        <div class="quiz-section">
-            <h2>Cuestionario General</h2>
-            <div class="quiz-toggle">
-                <label for="generalQuizMode">Modo:</label>
-                <select id="generalQuizMode">
-                    <option value="formulaToName">Fórmula a Nombre</option>
-                    <option value="nameToFormula">Nombre a Fórmula</option>
-                </select>
+            <div class="quiz-section">
+                <h2>Cuestionario de Hidrácidos</h2>
+                <div class="quiz-toggle">
+                    <label for="hidracidQuizMode">Modo:</label>
+                    <select id="hidracidQuizMode">
+                        <option value="formulaToName">Fórmula a Nombre</option>
+                        <option value="nameToFormula">Nombre a Fórmula</option>
+                    </select>
+                    <label for="hidracidNomenclature">Nomenclatura:</label>
+                    <select id="hidracidNomenclature">
+                        <option value="systematic">Sistemática</option>
+                        <option value="traditional">Tradicional</option>
+                    </select>
+                </div>
+                <div id="hidracidQuizQuestions"></div>
             </div>
-            <div id="generalQuizQuestions"></div>
+            <div class="quiz-section">
+                <h2>Cuestionario General</h2>
+                <div class="quiz-toggle">
+                    <label for="generalQuizMode">Modo:</label>
+                    <select id="generalQuizMode">
+                        <option value="formulaToName">Fórmula a Nombre</option>
+                        <option value="nameToFormula">Nombre a Fórmula</option>
+                    </select>
+                </div>
+                <div id="generalQuizQuestions"></div>
+            </div>
         </div>
     </div>
 
@@ -576,6 +635,7 @@
                         cell.innerHTML = `
                             <div class="atomic-number">${element.atomicNumber}</div>
                             <div class="symbol">${element.symbol}</div>
+                            <div class="oxidation-states">EO: ${element.oxidationStates.join(', ') || 'N/A'}</div>
                         `;
                         cell.addEventListener('click', () => showElementModal(element));
                     } else {
