@@ -1,0 +1,824 @@
+{
+  "oxide": [
+    {
+      "formula": "CO",
+      "names": {
+        "systematic": "Monóxido de carbono",
+        "traditional": "Monóxido de carbono",
+        "stock": "Óxido de carbono(II)"
+      }
+    },
+    {
+      "formula": "CO₂",
+      "names": {
+        "systematic": "Dióxido de carbono",
+        "traditional": "Dióxido de carbono",
+        "stock": "Óxido de carbono(IV)"
+      }
+    },
+    {
+      "formula": "FeO",
+      "names": {
+        "systematic": "Monóxido de hierro",
+        "traditional": "Óxido ferroso",
+        "stock": "Óxido de hierro(II)"
+      }
+    },
+    {
+      "formula": "Fe₂O₃",
+      "names": {
+        "systematic": "Trióxido de dihierro",
+        "traditional": "Óxido férrico",
+        "stock": "Óxido de hierro(III)"
+      }
+    },
+    {
+      "formula": "SO₂",
+      "names": {
+        "systematic": "Dióxido de azufre",
+        "traditional": "Óxido de azufre(IV)",
+        "stock": "Óxido de azufre(IV)"
+      }
+    },
+    {
+      "formula": "SO₃",
+      "names": {
+        "systematic": "Trióxido de azufre",
+        "traditional": "Óxido de azufre(VI)",
+        "stock": "Óxido de azufre(VI)"
+      }
+    },
+    {
+      "formula": "N₂O",
+      "names": {
+        "systematic": "Monóxido de dinitrógeno",
+        "traditional": "Óxido de nitrógeno(I)",
+        "stock": "Óxido de nitrógeno(I)"
+      }
+    },
+    {
+      "formula": "NO",
+      "names": {
+        "systematic": "Monóxido de nitrógeno",
+        "traditional": "Óxido de nitrógeno(II)",
+        "stock": "Óxido de nitrógeno(II)"
+      }
+    },
+    {
+      "formula": "N₂O₃",
+      "names": {
+        "systematic": "Trióxido de dinitrógeno",
+        "traditional": "Óxido de nitrógeno(III)",
+        "stock": "Óxido de nitrógeno(III)"
+      }
+    },
+    {
+      "formula": "NO₂",
+      "names": {
+        "systematic": "Dióxido de nitrógeno",
+        "traditional": "Óxido de nitrógeno(IV)",
+        "stock": "Óxido de nitrógeno(IV)"
+      }
+    },
+    {
+      "formula": "N₂O₅",
+      "names": {
+        "systematic": "Pentaóxido de dinitrógeno",
+        "traditional": "Óxido de nitrógeno(V)",
+        "stock": "Óxido de nitrógeno(V)"
+      }
+    },
+    {
+      "formula": "P₂O₃",
+      "names": {
+        "systematic": "Trióxido de difósforo",
+        "traditional": "Óxido de fósforo(III)",
+        "stock": "Óxido de fósforo(III)"
+      }
+    },
+    {
+      "formula": "P₂O₅",
+      "names": {
+        "systematic": "Pentaóxido de difósforo",
+        "traditional": "Óxido de fósforo(V)",
+        "stock": "Óxido de fósforo(V)"
+      }
+    },
+    {
+      "formula": "Cl₂O",
+      "names": {
+        "systematic": "Monóxido de dicloro",
+        "traditional": "Óxido de cloro(I)",
+        "stock": "Óxido de cloro(I)"
+      }
+    },
+    {
+      "formula": "Cl₂O₃",
+      "names": {
+        "systematic": "Trióxido de dicloro",
+        "traditional": "Óxido de cloro(III)",
+        "stock": "Óxido de cloro(III)"
+      }
+    },
+    {
+      "formula": "Cl₂O₇",
+      "names": {
+        "systematic": "Heptaóxido de dicloro",
+        "traditional": "Óxido de cloro(VII)",
+        "stock": "Óxido de cloro(VII)"
+      }
+    },
+    {
+      "formula": "Na₂O",
+      "names": {
+        "systematic": "Óxido de disodio",
+        "traditional": "Óxido de sodio",
+        "stock": "Óxido de sodio"
+      }
+    },
+    {
+      "formula": "MgO",
+      "names": {
+        "systematic": "Óxido de magnesio",
+        "traditional": "Óxido de magnesio",
+        "stock": "Óxido de magnesio"
+      }
+    },
+    {
+      "formula": "CaO",
+      "names": {
+        "systematic": "Óxido de calcio",
+        "traditional": "Óxido de calcio",
+        "stock": "Óxido de calcio"
+      }
+    },
+    {
+      "formula": "Al₂O₃",
+      "names": {
+        "systematic": "Trióxido de dialuminio",
+        "traditional": "Óxido de aluminio",
+        "stock": "Óxido de aluminio"
+      }
+    },
+    {
+      "formula": "Cu₂O",
+      "names": {
+        "systematic": "Monóxido de dicobre",
+        "traditional": "Óxido cuproso",
+        "stock": "Óxido de cobre(I)"
+      }
+    },
+    {
+      "formula": "CuO",
+      "names": {
+        "systematic": "Monóxido de cobre",
+        "traditional": "Óxido cúprico",
+        "stock": "Óxido de cobre(II)"
+      }
+    },
+    {
+      "formula": "ZnO",
+      "names": {
+        "systematic": "Óxido de zinc",
+        "traditional": "Óxido de zinc",
+        "stock": "Óxido de zinc"
+      }
+    },
+    {
+      "formula": "Ag₂O",
+      "names": {
+        "systematic": "Óxido de plata(I)",
+        "traditional": "Óxido de plata",
+        "stock": "Óxido de plata(I)"
+      }
+    },
+    {
+      "formula": "Hg₂O",
+      "names": {
+        "systematic": "Monóxido de didimercurio",
+        "traditional": "Óxido mercurioso",
+        "stock": "Óxido de mercurio(I)"
+      }
+    },
+    {
+      "formula": "HgO",
+      "names": {
+        "systematic": "Monóxido de mercurio",
+        "traditional": "Óxido mercúrico",
+        "stock": "Óxido de mercurio(II)"
+      }
+    },
+    {
+      "formula": "MnO₂",
+      "names": {
+        "systematic": "Dióxido de manganeso",
+        "traditional": "Óxido mangánico",
+        "stock": "Óxido de manganeso(IV)"
+      }
+    },
+    {
+      "formula": "Cr₂O₃",
+      "names": {
+        "systematic": "Trióxido de dicromo",
+        "traditional": "Óxido crómico",
+        "stock": "Óxido de cromo(III)"
+      }
+    },
+    {
+      "formula": "CrO₃",
+      "names": {
+        "systematic": "Trióxido de cromo",
+        "traditional": "Óxido crómico(VI)",
+        "stock": "Óxido de cromo(VI)"
+      }
+    },
+    {
+      "formula": "PbO",
+      "names": {
+        "systematic": "Monóxido de plomo",
+        "traditional": "Óxido plumboso",
+        "stock": "Óxido de plomo(II)"
+      }
+    },
+    {
+      "formula": "PbO₂",
+      "names": {
+        "systematic": "Dióxido de plomo",
+        "traditional": "Óxido plúmbico",
+        "stock": "Óxido de plomo(IV)"
+      }
+    },
+    {
+      "formula": "SnO",
+      "names": {
+        "systematic": "Monóxido de estaño",
+        "traditional": "Óxido estánnoso",
+        "stock": "Óxido de estaño(II)"
+      }
+    },
+    {
+      "formula": "SnO₂",
+      "names": {
+        "systematic": "Dióxido de estaño",
+        "traditional": "Óxido estánnico",
+        "stock": "Óxido de estaño(IV)"
+      }
+    }
+  ],
+  "oxoacid": [
+      {
+      "formula": "H₂SO₄",
+      "names": {
+          "systematic": "Ácido tetraoxosulfúrico",
+          "traditional": "Ácido sulfúrico",
+          "stock": "Ácido tetraoxosulfúrico(VI)"
+      }
+      },
+      {
+      "formula": "HNO₃",
+      "names": {
+          "systematic": "Ácido trioxonítrico",
+          "traditional": "Ácido nítrico",
+          "stock": "Ácido trioxonítrico(V)"
+      }
+      },
+      {
+      "formula": "H₂CO₃",
+      "names": {
+          "systematic": "Ácido trioxocarbónico",
+          "traditional": "Ácido carbónico",
+          "stock": "Ácido trioxocarbónico(IV)"
+      }
+      },
+      {
+      "formula": "H₃PO₄",
+      "names": {
+          "systematic": "Ácido tetraoxofosfórico",
+          "traditional": "Ácido fosfórico",
+          "stock": "Ácido tetraoxofosfórico(V)"
+      }
+      },
+      {
+      "formula": "H₂SO₃",
+      "names": {
+          "systematic": "Ácido trioxosulfúrico",
+          "traditional": "Ácido sulfuroso",
+          "stock": "Ácido trioxosulfúrico(IV)"
+      }
+      },
+      {
+      "formula": "HNO₂",
+      "names": {
+          "systematic": "Ácido dioxonítrico",
+          "traditional": "Ácido nitroso",
+          "stock": "Ácido dioxonítrico(III)"
+      }
+      },
+      {
+      "formula": "H₃PO₃",
+      "names": {
+          "systematic": "Ácido trioxofosfórico",
+          "traditional": "Ácido fosforoso",
+          "stock": "Ácido trioxofosfórico(III)"
+      }
+      },
+      {
+      "formula": "H₄P₂O₇",
+      "names": {
+          "systematic": "Ácido heptaoxodifosfórico",
+          "traditional": "Ácido pirofosfórico",
+          "stock": "Ácido heptaoxodifosfórico(V)"
+      }
+      },
+      {
+      "formula": "HClO",
+      "names": {
+          "systematic": "Ácido oxoclórico",
+          "traditional": "Ácido hipocloroso",
+          "stock": "Ácido oxoclórico(I)"
+      }
+      },
+      {
+      "formula": "HClO₂",
+      "names": {
+          "systematic": "Ácido dioxoclórico",
+          "traditional": "Ácido cloroso",
+          "stock": "Ácido dioxoclórico(III)"
+      }
+      },
+      {
+      "formula": "HClO₃",
+      "names": {
+          "systematic": "Ácido trioxoclórico",
+          "traditional": "Ácido clórico",
+          "stock": "Ácido trioxoclórico(V)"
+      }
+      },
+      {
+      "formula": "HClO₄",
+      "names": {
+          "systematic": "Ácido tetraoxoclórico",
+          "traditional": "Ácido perclórico",
+          "stock": "Ácido tetraoxoclórico(VII)"
+      }
+      },
+      {
+      "formula": "HMnO₄",
+      "names": {
+          "systematic": "Ácido tetraoxomangánico",
+          "traditional": "Ácido permangánico",
+          "stock": "Ácido tetraoxomangánico(VII)"
+      }
+      },
+      {
+      "formula": "H₂CrO₄",
+      "names": {
+          "systematic": "Ácido tetraoxocrómico",
+          "traditional": "Ácido crómico",
+          "stock": "Ácido tetraoxocrómico(VI)"
+      }
+      },
+      {
+      "formula": "H₂MnO₄",
+      "names": {
+          "systematic": "Ácido tetraoxomangánico",
+          "traditional": "Ácido mangánico",
+          "stock": "Ácido tetraoxomangánico(VI)"
+      }
+      },
+      {
+      "formula": "H₂SeO₄",
+      "names": {
+          "systematic": "Ácido tetraoxoselenioso",
+          "traditional": "Ácido selénico",
+          "stock": "Ácido tetraoxoselenioso(VI)"
+      }
+      },
+      {
+      "formula": "H₂SeO₃",
+      "names": {
+          "systematic": "Ácido trioxoselenioso",
+          "traditional": "Ácido selenioso",
+          "stock": "Ácido trioxoselenioso(IV)"
+      }
+      },
+      {
+      "formula": "HBrO",
+      "names": {
+          "systematic": "Ácido oxobromoso",
+          "traditional": "Ácido hipobromoso",
+          "stock": "Ácido oxobromoso(I)"
+      }
+      },
+      {
+      "formula": "HBrO₃",
+      "names": {
+          "systematic": "Ácido trioxobromoso",
+          "traditional": "Ácido brómico",
+          "stock": "Ácido trioxobromoso(V)"
+      }
+      },
+      {
+      "formula": "HIO",
+      "names": {
+          "systematic": "Ácido oxoyodoso",
+          "traditional": "Ácido hipoyodoso",
+          "stock": "Ácido oxoyodoso(I)"
+      }
+      },
+      {
+      "formula": "HIO₃",
+      "names": {
+          "systematic": "Ácido trioxoyódico",
+          "traditional": "Ácido yódico",
+          "stock": "Ácido trioxoyódico(V)"
+      }
+      },
+      {
+      "formula": "H₂SiO₃",
+      "names": {
+          "systematic": "Ácido trioxosilícico",
+          "traditional": "Ácido silícico",
+          "stock": "Ácido trioxosilícico(IV)"
+      }
+      },
+      {
+      "formula": "H₂TeO₄",
+      "names": {
+          "systematic": "Ácido tetraoxotelúrico",
+          "traditional": "Ácido telúrico",
+          "stock": "Ácido tetraoxotelúrico(VI)"
+      }
+      },
+      {
+      "formula": "H₂TeO₃",
+      "names": {
+          "systematic": "Ácido trioxoteluroso",
+          "traditional": "Ácido teluroso",
+          "stock": "Ácido trioxoteluroso(IV)"
+      }
+      },
+      {
+      "formula": "H₂BO₃",
+      "names": {
+          "systematic": "Ácido trioxobórico",
+          "traditional": "Ácido bórico",
+          "stock": "Ácido trioxobórico(III)"
+      }
+      },
+      {
+      "formula": "HAsO₂",
+      "names": {
+          "systematic": "Ácido dioxoarsenioso",
+          "traditional": "Ácido arsenioso",
+          "stock": "Ácido dioxoarsenioso(III)"
+      }
+      },
+      {
+      "formula": "H₃AsO₄",
+      "names": {
+          "systematic": "Ácido tetraoxoarsénico",
+          "traditional": "Ácido arsénico",
+          "stock": "Ácido tetraoxoarsénico(V)"
+      }
+      },
+      {
+      "formula": "H₃SbO₄",
+      "names": {
+          "systematic": "Ácido tetraoxoantimónico",
+          "traditional": "Ácido antimonioso",
+          "stock": "Ácido tetraoxoantimónico(V)"
+      }
+      },
+      {
+      "formula": "H₄SiO₄",
+      "names": {
+          "systematic": "Ácido tetraoxosilícico",
+          "traditional": "Ácido ortosilícico",
+          "stock": "Ácido tetraoxosilícico(IV)"
+      }
+      },
+      {
+      "formula": "H₂C₂O₄",
+      "names": {
+          "systematic": "Ácido dioxoetanoico",
+          "traditional": "Ácido oxálico",
+          "stock": "Ácido etanodioico"
+      }
+      },
+      {
+      "formula": "H₂N₂O₂",
+      "names": {
+          "systematic": "Ácido dioxodiazanico",
+          "traditional": "Ácido hiponitroso",
+          "stock": "Ácido dioxonitrógeno(II)"
+      }
+      }
+  ],
+  "hidracid": [
+      {
+      "formula": "HF",
+      "names": {
+          "traditional": "Ácido fluorhídrico",
+          "systematic": "Fluoruro de hidrógeno"
+      }
+      },
+      {
+      "formula": "HCl",
+      "names": {
+          "traditional": "Ácido clorhídrico",
+          "systematic": "Cloruro de hidrógeno"
+      }
+      },
+      {
+      "formula": "HBr",
+      "names": {
+          "traditional": "Ácido bromhídrico",
+          "systematic": "Bromuro de hidrógeno"
+      }
+      },
+      {
+      "formula": "HI",
+      "names": {
+          "traditional": "Ácido yodhídrico",
+          "systematic": "Yoduro de hidrógeno"
+      }
+      },
+      {
+      "formula": "H₂S",
+      "names": {
+          "traditional": "Ácido sulfhídrico",
+          "systematic": "Sulfuro de hidrógeno"
+      }
+      },
+      {
+      "formula": "H₂Se",
+      "names": {
+          "traditional": "Ácido selenhídrico",
+          "systematic": "Seleniuro de hidrógeno"
+      }
+      },
+      {
+      "formula": "H₂Te",
+      "names": {
+          "traditional": "Ácido telurhídrico",
+          "systematic": "Telururo de hidrógeno"
+      }
+      },
+      {
+      "formula": "HCN",
+      "names": {
+          "traditional": "Ácido cianhídrico",
+          "systematic": "Cianuro de hidrógeno"
+      }
+      },
+      {
+      "formula": "HAs",
+      "names": {
+          "traditional": "Ácido arsenhídrico",
+          "systematic": "Arseniuro de hidrógeno"
+      }
+      },
+      {
+      "formula": "HSb",
+      "names": {
+          "traditional": "Ácido antimonhídrico",
+          "systematic": "Antimoniuro de hidrógeno"
+      }
+      }
+  ],
+  "hydroxide": [
+      {
+      "formula": "NaOH",
+      "names": {
+          "traditional": "Hidróxido sódico",
+          "stock": "Hidróxido de sodio",
+          "systematic": "Hidróxido de sodio"
+      }
+      },
+      {
+      "formula": "KOH",
+      "names": {
+          "traditional": "Hidróxido potásico",
+          "stock": "Hidróxido de potasio",
+          "systematic": "Hidróxido de potasio"
+      }
+      },
+      {
+      "formula": "Ca(OH)₂",
+      "names": {
+          "traditional": "Hidróxido cálcico",
+          "stock": "Hidróxido de calcio",
+          "systematic": "Dihidróxido de calcio"
+      }
+      },
+      {
+      "formula": "Ba(OH)₂",
+      "names": {
+          "traditional": "Hidróxido bárico",
+          "stock": "Hidróxido de bario",
+          "systematic": "Dihidróxido de bario"
+      }
+      },
+      {
+      "formula": "Mg(OH)₂",
+      "names": {
+          "traditional": "Hidróxido magnésico",
+          "stock": "Hidróxido de magnesio",
+          "systematic": "Dihidróxido de magnesio"
+      }
+      },
+      {
+      "formula": "Al(OH)₃",
+      "names": {
+          "traditional": "Hidróxido alumínico",
+          "stock": "Hidróxido de aluminio",
+          "systematic": "Trihidróxido de aluminio"
+      }
+      },
+      {
+      "formula": "Fe(OH)₂",
+      "names": {
+          "traditional": "Hidróxido ferroso",
+          "stock": "Hidróxido de hierro(II)",
+          "systematic": "Dihidróxido de hierro"
+      }
+      },
+      {
+      "formula": "Fe(OH)₃",
+      "names": {
+          "traditional": "Hidróxido férrico",
+          "stock": "Hidróxido de hierro(III)",
+          "systematic": "Trihidróxido de hierro"
+      }
+      },
+      {
+      "formula": "CuOH",
+      "names": {
+          "traditional": "Hidróxido cuproso",
+          "stock": "Hidróxido de cobre(I)",
+          "systematic": "Hidróxido de cobre"
+      }
+      },
+      {
+      "formula": "Cu(OH)₂",
+      "names": {
+          "traditional": "Hidróxido cúprico",
+          "stock": "Hidróxido de cobre(II)",
+          "systematic": "Dihidróxido de cobre"
+      }
+      },
+      {
+      "formula": "Zn(OH)₂",
+      "names": {
+          "traditional": "Hidróxido de zinc",
+          "stock": "Hidróxido de zinc",
+          "systematic": "Dihidróxido de zinc"
+      }
+      },
+      {
+      "formula": "Pb(OH)₂",
+      "names": {
+          "traditional": "Hidróxido plumboso",
+          "stock": "Hidróxido de plomo(II)",
+          "systematic": "Dihidróxido de plomo"
+      }
+      },
+      {
+      "formula": "Sn(OH)₂",
+      "names": {
+          "traditional": "Hidróxido estánnoso",
+          "stock": "Hidróxido de estaño(II)",
+          "systematic": "Dihidróxido de estaño"
+      }
+      },
+      {
+      "formula": "Sn(OH)₄",
+      "names": {
+          "traditional": "Hidróxido estánnico",
+          "stock": "Hidróxido de estaño(IV)",
+          "systematic": "Tetrahidróxido de estaño"
+      }
+      },
+      {
+      "formula": "Pb(OH)₄",
+      "names": {
+          "traditional": "Hidróxido plúmbico",
+          "stock": "Hidróxido de plomo(IV)",
+          "systematic": "Tetrahidróxido de plomo"
+      }
+      },
+      {
+      "formula": "Ni(OH)₂",
+      "names": {
+          "traditional": "Hidróxido niqueloso",
+          "stock": "Hidróxido de níquel(II)",
+          "systematic": "Dihidróxido de níquel"
+      }
+      },
+      {
+      "formula": "Ni(OH)₃",
+      "names": {
+          "traditional": "Hidróxido niquélico",
+          "stock": "Hidróxido de níquel(III)",
+          "systematic": "Trihidróxido de níquel"
+      }
+      },
+      {
+      "formula": "Co(OH)₂",
+      "names": {
+          "traditional": "Hidróxido cobaltoso",
+          "stock": "Hidróxido de cobalto(II)",
+          "systematic": "Dihidróxido de cobalto"
+      }
+      },
+      {
+      "formula": "Co(OH)₃",
+      "names": {
+          "traditional": "Hidróxido cobáltico",
+          "stock": "Hidróxido de cobalto(III)",
+          "systematic": "Trihidróxido de cobalto"
+      }
+      },
+      {
+      "formula": "Cr(OH)₂",
+      "names": {
+          "traditional": "Hidróxido cromoso",
+          "stock": "Hidróxido de cromo(II)",
+          "systematic": "Dihidróxido de cromo"
+      }
+      },
+      {
+      "formula": "Cr(OH)₃",
+      "names": {
+          "traditional": "Hidróxido crómico",
+          "stock": "Hidróxido de cromo(III)",
+          "systematic": "Trihidróxido de cromo"
+      }
+      },
+      {
+      "formula": "Mn(OH)₂",
+      "names": {
+          "traditional": "Hidróxido manganoso",
+          "stock": "Hidróxido de manganeso(II)",
+          "systematic": "Dihidróxido de manganeso"
+      }
+      },
+      {
+      "formula": "Mn(OH)₄",
+      "names": {
+          "traditional": "Hidróxido mangánico",
+          "stock": "Hidróxido de manganeso(IV)",
+          "systematic": "Tetrahidróxido de manganeso"
+      }
+      },
+      {
+      "formula": "HgOH",
+      "names": {
+          "traditional": "Hidróxido mercurioso",
+          "stock": "Hidróxido de mercurio(I)",
+          "systematic": "Hidróxido de mercurio"
+      }
+      },
+      {
+      "formula": "Hg(OH)₂",
+      "names": {
+          "traditional": "Hidróxido mercúrico",
+          "stock": "Hidróxido de mercurio(II)",
+          "systematic": "Dihidróxido de mercurio"
+      }
+      },
+      {
+      "formula": "Be(OH)₂",
+      "names": {
+          "traditional": "Hidróxido de berilio",
+          "stock": "Hidróxido de berilio",
+          "systematic": "Dihidróxido de berilio"
+      }
+      },
+      {
+      "formula": "Sr(OH)₂",
+      "names": {
+          "traditional": "Hidróxido de estroncio",
+          "stock": "Hidróxido de estroncio",
+          "systematic": "Dihidróxido de estroncio"
+      }
+      },
+      {
+      "formula": "LiOH",
+      "names": {
+          "traditional": "Hidróxido de litio",
+          "stock": "Hidróxido de litio",
+          "systematic": "Hidróxido de litio"
+      }
+      },
+      {
+      "formula": "FrOH",
+      "names": {
+          "traditional": "Hidróxido de francio",
+          "stock": "Hidróxido de francio",
+          "systematic": "Hidróxido de francio"
+      }
+      }
+  ]
+}
